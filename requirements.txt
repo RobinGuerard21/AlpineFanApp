@@ -5,6 +5,7 @@ dash-html-components==2.0.0
 dash-table==5.0.0
 fastf1==3.0.2
 geopy==2.3.0
+gunicorn==20.1.0
 joblib==1.2.0
 nbconvert==7.4.0
 pandas==1.5.3
