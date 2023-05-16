@@ -1,1 +1,1 @@
-web: gunicorn app:server
+web: gunicorn F1Dashboard-main/app:server
