@@ -4,6 +4,8 @@ import os
 
 app = Dash(__name__, use_pages=True, external_stylesheets=['https://use.fontawesome.com/releases/v5.7.2/css/all.css'])
 
+server = app.server
+
 if not os.path.exists("data"):
     os.mkdir("data")
 
