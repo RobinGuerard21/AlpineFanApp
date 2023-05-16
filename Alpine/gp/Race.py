@@ -19,7 +19,7 @@ class Race:
         dir = path.join("data", str(year) + " " + session.event.EventName)
         if not path.exists(dir):
             os.mkdir(dir)
-        self.name = session.name
+        self._name = session.name
         self.event_name = session.event.EventName
         self.event_date = session.event.EventDate
         file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}.z")
@@ -90,6 +90,10 @@ class Race:
     @property
     def results(self):
         return self._results
+
+    @property
+    def name(self):
+        return self.event_name
 
     @property
     def get_load(self):

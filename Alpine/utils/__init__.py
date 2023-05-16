@@ -67,7 +67,8 @@ def logo(fig, rows=1):
     for i in range(1, rows+1):
         fig.add_layout_image(
             dict(
-                source="https://cdn.cookielaw.org/logos/1058e0b9-ee95-4d43-8292-3dae40ce5c3c/b4f83c83-bbed-4615-94dd-e1db19ab289e/d93ec308-72e0-452b-aa87-506f7e2a88e1/Alpine_logo_name.png",
+                # source="https://cdn.cookielaw.org/logos/1058e0b9-ee95-4d43-8292-3dae40ce5c3c/b4f83c83-bbed-4615-94dd-e1db19ab289e/d93ec308-72e0-452b-aa87-506f7e2a88e1/Alpine_logo_name.png",
+                source="https://raw.githubusercontent.com/RobinGuerard21/AlpineFanApp/a099c24536929e6f5b3930eff59a5b0d8098d3be/F1Dashboard-main/assets/images/logo_dark.png",
                 xref="x domain",
                 yref="y domain",
                 x=0.5,

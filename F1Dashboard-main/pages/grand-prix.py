@@ -6,6 +6,7 @@ import Alpine.gp as f1
 import os.path as path
 import plotly.express as px
 import numpy as np
+import Alpine.strat as strat
 
 dash.register_page(__name__, path="/grand-prix", path_template="/grand-prix/<year>/<event>/<session>")
 
@@ -194,10 +195,17 @@ def Sprint(year, event, format):
     return main
 
 
-def Race(year, event):
+def Race(year, event, name):
     race = f1.get_race(year, event)
     r, date = race.get_load
     main = []
+    try:
+        exist, predict = strat.strat(name)
+        if exist:
+            main.append(
+                html.Div(className="plot lap_comp", children=dcc.Graph(id='race_predict', figure=predict)))
+    except:
+        print("error")
     if r:
         main.append(
             html.Div(className="plot lap_comp", children=dcc.Graph(id='race_delta_to_first', figure=race.delta_to_first())))
@@ -215,15 +223,15 @@ def Race(year, event):
         )
     return main
 
-def content(year, event, session, format):
+def content(year, event, session, we):
     if session == "fp":
         main = fp(year, event)
     elif session == "qualif":
         main = Qualy(year, event)
     elif session == "race":
-        main = Race(year, event)
+        main = Race(year, event, we.Name.iloc[0])
     elif session == "sprint":
-        main = Sprint(year, event, format)
+        main = Sprint(year, event, we.Format.iloc[0])
     else:
         main = "overall"
     return html.Div(className="main", children=main)
@@ -263,9 +271,9 @@ def layout(session=None, year=None, event=None, **other):
     chosen_gp = gp_data.loc[(gp_data['Year'] == year) & (gp_data["Round"] == event)]
     # Defining page if all variable are set
     if session == "fp" or session == "qualif" or session == "race" or session == "sprint":
-        # page = content(year, event, session, chosen_gp.Format.iloc[0])
+        # page = content(year, event, session, chosen_gp)
         try:
-            page = content(year, event, session, chosen_gp.Format.iloc[0])
+            page = content(year, event, session, chosen_gp)
         except:
             # TODO : Make it better
             page = html.P(children="Sorry there is a problem here")

@@ -260,6 +260,19 @@ html {
     text-align: center
 }
 
+.md-doc {
+    overflow-y: scroll;
+    height: -webkit-fill-available
+}
+
+.md-doc::-webkit-scrollbar {
+    display:none
+}
+
+.md-doc img {
+    width: 100%
+}
+
 @media screen and (min-width: 1400px) {
   .plot {
     width: 27%;
