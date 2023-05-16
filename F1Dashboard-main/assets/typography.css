@@ -1,0 +1,30 @@
+@font-face {
+    font-family: "Marianne";
+    src: url("fonts/Marianne-Regular.otf");
+}
+@font-face {
+    font-family: "Marianne Medium";
+    src: url("fonts/Marianne-Medium.otf");
+}
+@font-face {
+    font-family: "Marianne Bold";
+    src: url("fonts/Marianne-Bold.otf");
+}
+
+html {
+    font-family: Marianne;
+}
+
+body {
+    margin: 0;
+}
+
+a {
+    color: var(--text-main);
+    text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    font-family: "Marianne Bold";
+}

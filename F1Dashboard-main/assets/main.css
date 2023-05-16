@@ -1,0 +1,283 @@
+html {
+    /*--bg-prime: linear-gradient(#4B749F, #243748, #4B749F);*/
+    --bg-prime: #2c3e50;
+    --bg-secondary: #34495e;
+    --plot: #fffffa;
+    --text-main: #ecf0f1;
+    color: var(--text-main)
+}
+
+.window {
+    background: var(--bg-prime);
+    display: flex;
+    margin: 0;
+}
+
+.side-bar {
+    z-index: 10;
+    background: var(--bg-secondary);
+    height: 90vh;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5vh 50px;
+    border-radius: 0 25px 25px 0;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+}
+
+#map-graph {
+    margin-top: -40px;
+    width: 100%;
+    height: 100%
+}
+
+.content-map {
+    padding: 2.5vh 0;
+    width: calc(100vw - 300px);
+    height: 95vh;
+}
+
+.year {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.year label {
+    color: var(--text-main);
+    font-weight: bold;
+    line-height: 30px;
+    margin-right: 10px;
+}
+
+.year #year-dropdown {
+    width: 100px;
+    z-index: 2;
+}
+
+.vert-nav .logo {
+    width: 60%;
+    margin: 0 20% 30px;
+}
+
+.vert-nav a {
+    font-size: 16px;
+}
+
+.vert-nav .link {
+    text-align: center;
+    width: 100%;
+    padding: 15px 0;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.vert-nav .link:hover,
+.vert-nav .link:focus {
+    background: linear-gradient(45deg, #595CFF, #369ead);
+    /*background: linear-gradient(45deg, #595CFF, #C6F8FF);*/
+}
+
+.nav-bar {
+    background: var(--bg-secondary);
+    height: 50px;
+    width: calc(100vw - 300px);
+}
+
+.content {
+    padding: 5vh 50px 0;
+    width: calc(100vw - 400px);
+    height: 95vh;
+}
+
+.Comming-soon {
+    width: 100%;
+    height: calc(100% - 5vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 100px;
+}
+
+.gp-header {
+    background: var(--bg-secondary);
+    display: flex;
+    height: 60px;
+    width: -webkit-fill-available;
+    border-radius: 10px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+}
+
+.left,
+.right {
+    width: 200px
+}
+
+.right {
+    display: flex;
+    justify-content: right
+}
+
+.change {
+    padding: 10px;
+}
+
+.change:hover,
+.change:focus {
+    border-radius: 10px;
+    background: linear-gradient(45deg, #595CFF, #369ead);
+}
+
+.left i {
+    margin: 0 10px 0 0
+}
+
+.right i {
+    margin: 0 0 0 10px
+}
+
+.loc {
+    width: 200px;
+    height: 60px;
+    background: var(--bg-prime);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.loc .change {
+    display: none;
+}
+
+.loc:hover .change {
+    display: inline;
+}
+
+.loc:hover .event {
+    display: none;
+}
+
+.loc small {
+    display: flex;
+    line-height: 5px;
+    justify-content: end;
+}
+
+.hor-nav {
+    display: flex;
+    width: 650px;
+    justify-content: space-between;
+}
+
+.hor-nav .link {
+    text-align: center;
+    width: 120px;
+    padding: 10px 0;
+    border-radius: 10px;
+}
+
+.hor-nav .link:hover,
+.hor-nav .link:focus,
+.hor-nav .link.active{
+    background: linear-gradient(45deg, #595CFF, #369ead);
+    /*background: linear-gradient(45deg, #595CFF, #C6F8FF);*/
+}
+
+.driver-selectors {
+    display: flex;
+    width: 200px;
+    height: 60px;
+    background: var(--bg-prime);
+}
+
+.driver-selectors .dash-dropdown {
+    width: 100px;
+    height: 60px;
+}
+
+.driver-selectors .dash-dropdown .Select-control {
+    height: 60px;
+    background: var(--bg-prime);
+    color: var(--text-main);
+    border: none;
+    border-radius: 0;
+}
+
+#driver-1 .Select-control {
+    border-right: 1px solid #243443;
+}
+
+.driver-selectors .dash-dropdown .Select-placeholder,
+.driver-selectors .dash-dropdown .Select-value,
+.driver-selectors .dash-dropdown .has-value.Select .Select-control .Select-value-label{
+    color: var(--text-main);
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 10px;
+}
+
+.driver-selectors .dash-dropdown .Select-arrow-zone {
+    padding-right: 2px;
+}
+
+.main {
+    margin-top: 2.5vh;
+    padding-top: 2.5vh;
+    display: flex;
+    justify-content: space-between;
+    overflow-y: auto;
+    height: calc(100vh - 10vh - 60px);
+    flex-wrap: wrap;
+}
+
+.main::-webkit-scrollbar {
+    display:none
+}
+
+.plot {
+    background: var(--plot);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+    margin: 16px;
+}
+
+.comming {
+    background: var(--bg-secondary);
+    color: var(--text-main);
+    font-size: 20px;
+    height: 40%;
+    display: flex;
+    align-items: center;
+    text-align: center
+}
+
+@media screen and (min-width: 1400px) {
+  .plot {
+    width: 27%;
+  }
+}
+
+@media screen and (max-width: 1399px) {
+  .plot {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 949px) {
+  .plot {
+    width: 100%;
+  }
+}
+
+.lap_comp {
+    width: 100%;
+}
