@@ -1,6 +1,8 @@
 # Objectif Formule 1
 
-## Sommaire
+**Par Robin Guerard**
+
+Github : [GitHub - RobinGuerard21/AlpineFanApp](https://github.com/RobinGuerard21/AlpineFanApp)
 
 [TOC]
 
@@ -258,14 +260,23 @@ Essayer de récupérer d'autres données notamment celles de Pirelli et potentie
 
 ### A. Intro
 
+Le dashboard permet d'afficher les différents graphiques réalisé et les rendre beaucoup plus accessible pour le un grand nombre d'utilisateur.
+
+Même pour faire des analyses rapides il peut s'avérer très utile.
+
 ### B. Parts
 
-### C. Notebooks
+Le dashboard est composé de plusieurs pages tel que :
+
+* Grand-prix : sur laquelle nous pouvons observer les données de chaque sessions des différents Grand Prix depuis 2018.
+* Saison : (à venir) permettra d'observer des statistiques sur les différentes saisons
+* Statistique : (à venir) permettra d'avoir des statistiques plus générale sur la Formule 1
+* Documentation : Permet d'avoir des informations sur le Dashboard
+* Notebooks : Permet d'avoir accès à certaines analyses sous format de notebook.
+* Contact : Page regroupant les information sur le créateur du dashboard
 
 ---
 
 ## 9. La Doc
 
-### A. Dans le code
-
-### B. Youtube
+La documentation est accessible via le readme sur le github mais aussi via la page documentation du dashboard, via des commentaires directement dans le code ou encore via certaine vidéo youtube.

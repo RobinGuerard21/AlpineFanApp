@@ -19,4 +19,4 @@ def layout(*other):
                                                      html.P(children=["The Github link : ", html.A(children="https://github.com/RobinGuerard21/AlpineFanApp/", href="https://github.com/RobinGuerard21/AlpineFanApp")])])
     ])
 
-    return html.Div(className="content", children=page)
+    return html.Div(className="content centered", children=page)

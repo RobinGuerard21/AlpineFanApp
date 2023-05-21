@@ -136,4 +136,4 @@ test
 #remove all data folders
 **/data/
 
-/F1Dashboard-main/*.ipynb
+/F1Dashboard-main
