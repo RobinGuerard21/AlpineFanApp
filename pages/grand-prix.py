@@ -8,7 +8,7 @@ import plotly.express as px
 import numpy as np
 import Alpine.strat as strat
 
-dash.register_page(__name__, path="/grand-prix", path_template="/grand-prix/<year>/<event>/<session>")
+dash.register_page(__name__, path="/grand-prix", path_template="/grand-prix/<year>/<event>/<session>", title="Alpine Fan F1 Dashboard | Grand Prix", description="Get all Formula 1's data on any Grand Prix since 2018. Choose your year, your event and the session then have Fun !", image="assets/images/logo.png")
 
 # Setting up the dataframe
 def get_dataframe() :
@@ -236,9 +236,9 @@ def content(year, event, session, we):
         main = "overall"
     return html.Div(className="main", children=main)
 
-def overview(year, event):
+def overview(year, event, gp):
     # Todo : WE Overview
-    return html.Div(className="main", children="Overview")
+    return html.Div(className="main", children=html.H1(children=f"Round {gp.Round.iloc[0]} : {gp.Name.iloc[0]}"))
 
 def layout(session=None, year=None, event=None, **other):
     gp_data = get_dataframe()
@@ -278,7 +278,7 @@ def layout(session=None, year=None, event=None, **other):
             # TODO : Make it better
             page = html.P(children="Sorry there is a problem here")
     else:
-        page = overview(year, event)
+        page = overview(year, event, chosen_gp)
     if chosen_gp.Format.iloc[0] == "sprint_shootout" or chosen_gp.Format.iloc[0] == "sprint":
         is_sprint = True
     else :

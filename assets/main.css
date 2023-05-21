@@ -56,6 +56,10 @@ html {
     z-index: 2;
 }
 
+.year .Select-menu-outer {
+    color: black
+}
+
 .vert-nav .logo {
     width: 60%;
     margin: 0 20% 30px;
@@ -112,31 +116,31 @@ html {
     box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
 }
 
-.left,
-.right {
+.gp-header .left,
+.gp-header .right {
     width: 200px
 }
 
-.right {
+.gp-header .right {
     display: flex;
     justify-content: right
 }
 
-.change {
+.gp-header .change {
     padding: 10px;
 }
 
-.change:hover,
-.change:focus {
+.gp-header .change:hover,
+.gp-header .change:focus {
     border-radius: 10px;
     background: linear-gradient(45deg, #595CFF, #369ead);
 }
 
-.left i {
+.gp-header .left i {
     margin: 0 10px 0 0
 }
 
-.right i {
+.gp-header .right i {
     margin: 0 0 0 10px
 }
 
@@ -185,47 +189,6 @@ html {
 .hor-nav .link:focus,
 .hor-nav .link.active{
     background: linear-gradient(45deg, #595CFF, #369ead);
-    /*background: linear-gradient(45deg, #595CFF, #C6F8FF);*/
-}
-
-.driver-selectors {
-    display: flex;
-    width: 200px;
-    height: 60px;
-    background: var(--bg-prime);
-}
-
-.driver-selectors .dash-dropdown {
-    width: 100px;
-    height: 60px;
-}
-
-.driver-selectors .dash-dropdown .Select-control {
-    height: 60px;
-    background: var(--bg-prime);
-    color: var(--text-main);
-    border: none;
-    border-radius: 0;
-}
-
-#driver-1 .Select-control {
-    border-right: 1px solid #243443;
-}
-
-.driver-selectors .dash-dropdown .Select-placeholder,
-.driver-selectors .dash-dropdown .Select-value,
-.driver-selectors .dash-dropdown .has-value.Select .Select-control .Select-value-label{
-    color: var(--text-main);
-    display: flex;
-    align-content: center;
-    flex-wrap: wrap;
-    padding-left: 5px;
-    padding-right: 5px;
-    font-size: 10px;
-}
-
-.driver-selectors .dash-dropdown .Select-arrow-zone {
-    padding-right: 2px;
 }
 
 .main {
@@ -240,6 +203,22 @@ html {
 
 .main::-webkit-scrollbar {
     display:none
+}
+
+.presentation a {
+    color: #89eaff
+}
+
+.presentation i {
+    margin-right: 10px
+}
+
+.media {
+    width: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0 12.5%;
 }
 
 .plot {
@@ -260,17 +239,99 @@ html {
     text-align: center
 }
 
-.md-doc {
-    overflow-y: scroll;
-    height: -webkit-fill-available
+.doc-main {
+    padding: 5vh 0;
+    width: calc(100vw - 300px);
+    height: 90vh;
+    display: flex;
 }
 
-.md-doc::-webkit-scrollbar {
+.doc-main .left:hover {
+    border-radius: 10px 0 0 10px;
+    background: linear-gradient(-90deg, #2c3e50 25%, #12181f);
+}
+
+.doc-main .right:hover {
+    border-radius: 0 10px 10px 0;
+    background: linear-gradient(90deg, #2c3e50 25%, #12181f);
+}
+
+.doc-main .change {
+    width: 50px;
+    max-width: 50px;
+    min-width: 50px;
+    display: flex;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.md {
+    overflow-y: scroll;
+    height: -webkit-fill-available;
+    background-color: var(--bg-secondary);
+    padding: 2vh 2.5vw;
+    border-radius: 20px;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+}
+
+.md::-webkit-scrollbar {
     display:none
 }
 
-.md-doc img {
+.md code.hljs {
+    color: var(--text-main);
+    background-color: var(--bg-prime);
+    border-radius: 10px;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+}
+
+.md.doc img {
     width: 100%
+}
+
+.md span.hljs-string {
+    color: #17f10c;
+}
+
+.md span.hljs-number {
+    color: #ff00e3
+}
+
+.md span.hljs-keyword {
+    color: #ff0000
+}
+
+.md span.hljs-title {
+    color: #ffe200
+}
+
+.md span.hljs-subst {
+    color: #ff8e00
+}
+
+.content.centered {
+    padding: 5vh 50px;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+}
+
+.content.centered .md img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+}
+
+.inner {
+    text-align: center;
+    background-color: var(--bg-secondary);
+    padding: 2vh 0 3vh;
+    border-radius: 25px;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+    width: 100%;
+    height: fit-content;
 }
 
 @media screen and (min-width: 1400px) {
