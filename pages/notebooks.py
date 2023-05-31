@@ -2,7 +2,7 @@ import dash
 from dash import html, dcc
 import os
 
-dash.register_page(__name__, path="/notebooks", path_template="/notebooks/<part>", title="Alpine Fan F1 Dashboard | Notebooks", description="Enjoy some short Analysis around some F1 Week-ends ! Take 5 minute to chill and have a better understanding of the week-end !", image="images/logo.png")
+dash.register_page(__name__, path="/notebooks", path_template="/notebooks/<part>", title="Alpine Fan F1 Dashboard | Notebooks", description="Enjoy some short Analysis around some F1 Week-ends ! Take 5 minute to chill and have a better understanding of the week-end !", image_url="https://alpinefan.robcorp.net/assets/images/logo.png")
 
 app = dash.get_app()
 

@@ -9,7 +9,7 @@ import numpy as np
 import Alpine.strat as strat
 import Alpine.utils as utils
 
-dash.register_page(__name__, path="/grand-prix", path_template="/grand-prix/<year>/<event>/<session>", title="Alpine Fan F1 Dashboard | Grand Prix", description="Get all Formula 1's data on any Grand Prix since 2018. Choose your year, your event and the session then have Fun !", image="https://alpinefan.robcorp.net/assets/images/logo.png")
+dash.register_page(__name__, path="/grand-prix", path_template="/grand-prix/<year>/<event>/<session>", title="Alpine Fan F1 Dashboard | Grand Prix", description="Get all Formula 1's data on any Grand Prix since 2018. Choose your year, your event and the session then have Fun !", image_url="https://alpinefan.robcorp.net/assets/images/logo.png")
 
 # Setting up the dataframe
 def get_dataframe() :
