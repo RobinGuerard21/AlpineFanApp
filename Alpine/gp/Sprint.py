@@ -9,15 +9,13 @@ import Alpine.utils as utils
 import pandas as pd
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
-import plotly.io as pio
 import plotly.express as px
 
 
-fastf1.Cache.disabled()
+fastf1.Cache.set_disabled()
 
 # applying the template
 utils.template
-pio.templates.default = 'alpine'
 
 
 def sprint_race(session):

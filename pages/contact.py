@@ -1,7 +1,7 @@
 import dash
 from dash import html, dcc
 
-dash.register_page(__name__, path="/contact")
+dash.register_page(__name__, path="/contact", title="Alpine Fan F1 Dashboard | Contact", description="Give me some feedbacks or have a Formula 1 talk with me !", image="images/logo.png")
 
 def layout(**other):
     page = html.Div(className="inner", children=[

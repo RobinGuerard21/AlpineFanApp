@@ -6,17 +6,15 @@ from datetime import datetime, timedelta
 import warnings
 import pandas as pd
 import Alpine.utils as utils
-import plotly.io as pio
 import plotly.express as px
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
 
-fastf1.Cache.disabled()
+fastf1.Cache.set_disabled()
 
 # applying the template
 utils.template
-pio.templates.default = 'alpine'
 
 
 class Qualifying:

@@ -135,5 +135,5 @@ test
 
 #remove all data folders
 **/data/
-
+/logs
 /F1Dashboard-main

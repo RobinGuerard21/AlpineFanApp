@@ -1,7 +1,7 @@
 import dash
 from dash import html, dcc
 
-dash.register_page(__name__, path="/documentation", path_template="/documentation/<part>")
+dash.register_page(__name__, path="/documentation", path_template="/documentation/<part>", title="Alpine Fan F1 Dashboard | Documentation", description="Have a better understanding of this Formula 1 dashboard or about Alpine Fan !", image="images/logo.png")
 
 def get_page(part):
     if part == None or part == 0:

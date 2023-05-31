@@ -1,7 +1,7 @@
 import dash
 from dash import html, dcc
 
-dash.register_page(__name__, path="/", title="Alpine Fan F1 Dashboard | Grand Prix", description="Stay connected with the thrilling world of Formula 1 with Alpine Fan\'s F1 Dashboard. Get Grand Prix datas, Formula analytics, and exclusive content.", image="assets/images/logo.png")
+dash.register_page(__name__, path="/", title="Alpine Fan F1 Dashboard | Home", description="Stay connected with the thrilling world of Formula 1 with Alpine Fan\'s F1 Dashboard. Get Grand Prix datas, Formula analytics, and exclusive content.", image="images/logo.png")
 
 def layout(*other):
     page = html.Div(className="inner", children=[

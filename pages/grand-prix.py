@@ -8,7 +8,7 @@ import plotly.express as px
 import numpy as np
 import Alpine.strat as strat
 
-dash.register_page(__name__, path="/grand-prix", path_template="/grand-prix/<year>/<event>/<session>", title="Alpine Fan F1 Dashboard | Grand Prix", description="Get all Formula 1's data on any Grand Prix since 2018. Choose your year, your event and the session then have Fun !", image="assets/images/logo.png")
+dash.register_page(__name__, path="/grand-prix", path_template="/grand-prix/<year>/<event>/<session>", title="Alpine Fan F1 Dashboard | Grand Prix", description="Get all Formula 1's data on any Grand Prix since 2018. Choose your year, your event and the session then have Fun !", image="images/logo.png")
 
 # Setting up the dataframe
 def get_dataframe() :
@@ -271,12 +271,12 @@ def layout(session=None, year=None, event=None, **other):
     chosen_gp = gp_data.loc[(gp_data['Year'] == year) & (gp_data["Round"] == event)]
     # Defining page if all variable are set
     if session == "fp" or session == "qualif" or session == "race" or session == "sprint":
-        # page = content(year, event, session, chosen_gp)
-        try:
-            page = content(year, event, session, chosen_gp)
-        except:
-            # TODO : Make it better
-            page = html.P(children="Sorry there is a problem here")
+        page = content(year, event, session, chosen_gp)
+        # try:
+        #     page = content(year, event, session, chosen_gp)
+        # except:
+        #     # TODO : Make it better
+        #     page = html.P(children="Sorry there is a problem here")
     else:
         page = overview(year, event, chosen_gp)
     if chosen_gp.Format.iloc[0] == "sprint_shootout" or chosen_gp.Format.iloc[0] == "sprint":

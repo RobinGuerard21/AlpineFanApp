@@ -1,5 +1,10 @@
 import dash
 from dash import Dash, html
+import logger
+import flask
+import os
+
+logger
 
 app = Dash(__name__, use_pages=True, external_stylesheets=['https://use.fontawesome.com/releases/v5.7.2/css/all.css'])
 
@@ -29,6 +34,10 @@ app.layout = html.Div(className="window", children=[
     ]
 )
 
+@server.route('/favicon.ico')
+def favicon():
+    return flask.send_from_directory(os.path.join(server.root_path, 'assets'),
+                                     'favicon.ico')
 
 if __name__ == '__main__':
     app.run_server(debug=True)

@@ -11,7 +11,8 @@ import plotly.express as px
 
 utils.template
 
-fastf1.Cache.disabled()
+fastf1.Cache.set_disabled()
+
 
 class Race:
     def __init__(self, year, event):
@@ -45,7 +46,12 @@ class Race:
                         tel = pd.concat([tel, dtel], ignore_index=True)
                 self._tel = tel
                 # Live telemetry
-                driver = session.results.loc[session.results.Position == 1, "Abbreviation"].iloc[0]
+                try:
+                    driver = session.results.loc[session.results.Position == 1, "Abbreviation"].iloc[0]
+                except:
+                    print("Used alternative way")
+                    sorted_df = session.laps.sort_values('LapNumber', ascending=False)
+                    driver = sorted_df[sorted_df['Position'] == 1].iloc[0]['Driver']
                 for i in self._laps['LapNumber'].unique():
                     lap_data = self._laps[self._laps['LapNumber'] == i]
                     self._laps.loc[self._laps['LapNumber'] == i, 'DeltaToFirst'] = lap_data['AltTime'] - lap_data.loc[
@@ -103,7 +109,8 @@ class Race:
         laps = self._laps[self._laps['FastF1Generated'] != True]
         drivers = pd.unique(laps.Driver).tolist()
         driver_colors = utils.driver_color(drivers)
-        fig = px.line(laps, x="LapNumber", y="DeltaToFirst", color="Driver", color_discrete_sequence=driver_colors, title=f"{self.event_name} Race Gap to Winner")
+        fig = px.line(laps, x="LapNumber", y="DeltaToFirst", color="Driver", color_discrete_sequence=driver_colors,
+                      title=f"{self.event_name} Race Gap to Winner")
         fig = utils.logo(fig)
         fig.update_layout(
             yaxis=dict(
