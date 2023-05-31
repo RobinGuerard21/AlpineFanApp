@@ -1,3 +1,4 @@
+import logging
 import warnings
 import fastf1
 import joblib
@@ -18,10 +19,10 @@ fastf1.Cache.set_disabled()
 utils.template
 
 
-def sprint_race(session):
+def sprint_race(session, event, year):
     name = session.name
     td = timedelta(hours=3)
-    if (session.date + td) < utils.time.get_time(session.event.Country, session.event.Location).replace(
+    if (session.date + td) < utils.time.get_time(event, year).replace(
             tzinfo=None):
         session.load()
         # Setting up laps DataFrame
@@ -41,11 +42,19 @@ def sprint_race(session):
                 tel = pd.concat([tel, dtel], ignore_index=True)
         _tel = tel
         # Live telemetry
-        driver = session.results.loc[session.results.Position == 1, "Abbreviation"].iloc[0]
-        for i in _laps['LapNumber'].unique():
-            lap_data = _laps[_laps['LapNumber'] == i]
-            _laps.loc[_laps['LapNumber'] == i, 'DeltaToFirst'] = lap_data['AltTime'] - lap_data.loc[
-                lap_data['Driver'] == driver, 'AltTime'].iloc[0]
+        try:
+            driver = session.results.loc[session.results.Position == 1, "Abbreviation"].iloc[0]
+        except:
+            logging.info("Results not available the Lap file was used to get the first !")
+            sorted_df = session.laps.sort_values('LapNumber', ascending=False)
+            driver = sorted_df[sorted_df['Position'] == 1].iloc[0]['Driver']
+        try:
+            for i in _laps['LapNumber'].unique():
+                lap_data = _laps[_laps['LapNumber'] == i]
+                _laps.loc[_laps['LapNumber'] == i, 'DeltaToFirst'] = lap_data['AltTime'] - lap_data.loc[
+                    lap_data['Driver'] == driver, 'AltTime'].iloc[0]
+        except:
+            utils.error(f"Known issue with delta (reload {name} {session.event.EventName} {year} once fixed)")
         # weather DataFrame
         session.weather_data['AltTime'] = session.weather_data.Time.dt.total_seconds() - 3600
         session.weather_data['AltTime'].loc[session.weather_data['AltTime'] < 0] = np.nan
@@ -58,8 +67,7 @@ def sprint_race(session):
     else:
         race = False
         race_Date = utils.time.get_session_date(session)
-        warnings.warn("The session is not done, the data is available 1h after the end of the session.",
-                      Warning, stacklevel=2)
+        logging.info('The session is not done, the data is available 1h after the end of the session.')
         return race, race_Date, name, "", "", "", "", ""
 
 
@@ -80,7 +88,7 @@ class Sprint:
                 # Verifying if the session is done. We add 2h to the beginning of the session to be sure that the data is up
                 # They are usually up 30min after the session (1h for fp)
                 td = timedelta(hours=2)
-                if (session.date + td) < utils.time.get_time(session.event.Country, session.event.Location).replace(
+                if (session.date + td) < utils.time.get_time(event, year).replace(
                         tzinfo=None):
                     session.load()
                     # create the dataframe to be saved with custom cols for easier plots def.
@@ -106,18 +114,17 @@ class Sprint:
                     weather.dropna(axis=0, inplace=True)
                     self._Q_weather = weather
                     self.Qualif = True
-                    self.Qualif_Date = utils.time.get_session_date(session)
+                    self.Qualif_Date = utils.time.get_session_date(session, event, year)
                 else:
                     self.Qualif = False
-                    self.Qualif_Date = utils.time.get_session_date(session)
-                    warnings.warn("The session is not done, the data is available 1h after the end of the session.",
-                                  Warning, stacklevel=2)
+                    self.Qualif_Date = utils.time.get_session_date(session, event, year)
+                    logging.info('The session is not done, the data is available 1h after the end of the session.')
                     return
             else:
                 self.Qualif = False
                 self.Qualif_Date = "Never"
             # Sprint part
-            self.race, self.race_Date, self.name, self._laps, self._tel, self._weather, self._results = sprint_race(sprint)
+            self.race, self.race_Date, self.name, self._laps, self._tel, self._weather, self._results = sprint_race(sprint, event, year)
             if format == "sprint_shootout" or self.race:
                 joblib.dump(self, file)
         else:
@@ -133,12 +140,11 @@ class Sprint:
                 self.Qualif = False
                 self.Qualif_Date = "Never"
             if not sprint.race and sprint.race_Date + timedelta(hours=3) < datetime.now():
-                self.race, self.race_Date, self.name, self._laps, self._tel, self._weather, self._results = sprint_race(sprint)
+                self.race, self.race_Date, self.name, self._laps, self._tel, self._weather, self._results = sprint_race(sprint, event, year)
                 joblib.dump(self, file)
             elif not sprint.race:
                 self.race, self.race_Date = sprint.race, sprint.race_Date
-                warnings.warn("The session is not done, the data is available 1h after the end of the session.",
-                              Warning, stacklevel=2)
+                logging.info('The session is not done, the data is available 1h after the end of the session.')
             else:
                 self.race = sprint.race
                 self.race_Date = sprint.race_Date

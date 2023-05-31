@@ -1,8 +1,9 @@
 from . import colors, template, time
 import warnings
+import logging
 
 
-__all__ = ['driver_color', 'team_color']
+__all__ = ['driver_color', 'team_color', 'error']
 
 
 def driver_color(driver):
@@ -63,6 +64,7 @@ def team_color(teams):
         warnings.warn(f"Only list or strings are accepted by this variable",
                       Warning, stacklevel=2)
 
+
 def logo(fig, rows=1):
     for i in range(1, rows+1):
         fig.add_layout_image(
@@ -81,3 +83,16 @@ def logo(fig, rows=1):
             ), row=i, col=1
         )
     return fig
+
+
+def error(issue):
+    logger = logging.getLogger(__name__)
+
+    file_handler = logging.FileHandler('logs/warnings.log')
+    file_handler.setLevel(logging.INFO)
+
+    formatter = logging.Formatter('%(asctime)s - %(levelname)-8s - %(message)s')
+    file_handler.setFormatter(formatter)
+
+    logger.addHandler(file_handler)
+    logger.warning(issue)

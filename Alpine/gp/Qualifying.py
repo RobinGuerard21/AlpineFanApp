@@ -3,7 +3,7 @@ import numpy as np
 import os
 import os.path as path
 from datetime import datetime, timedelta
-import warnings
+import logging
 import pandas as pd
 import Alpine.utils as utils
 import plotly.express as px
@@ -33,7 +33,7 @@ class Qualifying:
             # Verifying if the session is done. We add 2h to the beginning of the session to be sure that the data is up
             # They are usually up 30min after the session (1h for fp)
             td = timedelta(hours=2)
-            if (session.date + td) < utils.time.get_time(session.event.Country, session.event.Location).replace(tzinfo=None):
+            if (session.date + td) < utils.time.get_time(event, year).replace(tzinfo=None):
                 session.load()
                 # create the dataframe to be saved with custom cols for easier plots def.
                 laps = session.laps
@@ -61,11 +61,11 @@ class Qualifying:
                 weather.to_csv(weather_file, index=False)
             else:
                 self.Qualif = False
-                self.Qualif_Date = utils.time.get_session_date(session)
-                warnings.warn("The session is not done, the data is available 1h after the end of the session.", Warning, stacklevel=2)
+                self.Qualif_Date = utils.time.get_session_date(session, event, year)
+                logging.info('The session is not done, the data is available 1h after the end of the session.')
                 return
         self.Qualif = True
-        self.Qualif_Date = utils.time.get_session_date(session)
+        self.Qualif_Date = utils.time.get_session_date(session, event, year)
         self._laps = pd.read_csv(laps_file)
         tel_file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}-tel.csv")
         self._tel = pd.read_csv(tel_file)

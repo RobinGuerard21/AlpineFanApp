@@ -4,6 +4,7 @@ import os
 import os.path as path
 from datetime import datetime, timedelta
 import warnings
+import logging
 import pandas as pd
 import Alpine.utils as utils
 import plotly.express as px
@@ -65,7 +66,7 @@ class FreePractice:
             # Verifying if the session is done. We add 2h to the beginning of the session to be sure that the data is up
             # They are usually up 30min after the session (1h for fp)
             td = timedelta(hours=2)
-            if (session.date + td) < utils.time.get_time(session.event.Country, session.event.Location).replace(tzinfo=None):
+            if (session.date + td) < utils.time.get_time(event, year).replace(tzinfo=None):
                 create_save(session, year)
             else:
                 self.fp1 = False
@@ -77,16 +78,16 @@ class FreePractice:
                     self.fp3_Date = "Never"
                     return
                 self.fp2 = False
-                self.fp2_Date = utils.time.get_session_date(session)
+                self.fp2_Date = utils.time.get_session_date(session, event, year)
                 if session.event.EventFormat == "sprint":
                     self.fp3 = False
                     self.fp3_Date = "Never"
                     return
                 self.fp3 = False
-                self.fp3_Date = utils.time.get_session_date(fastf1.get_session(year, event, "fp3"))
-                warnings.warn("The session is not done, the data is available 1h after the end of the session.", Warning, stacklevel=2)
+                self.fp3_Date = utils.time.get_session_date(fastf1.get_session(year, event, "fp3"), event, year)
+                logging.info('The session is not done, the data is available 1h after the end of the session.')
                 return
-        self.fp1_Date = utils.time.get_session_date(session)
+        self.fp1_Date = utils.time.get_session_date(session, event, year)
         self._fp1_laps = pd.read_csv(laps_file)
         # tel_file = path.join(base, "data", str(year) + " " + session.event.EventName, f"{session.name}-tel.csv")
         tel_file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}-tel.csv")
@@ -109,19 +110,19 @@ class FreePractice:
         laps_file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}-laps.csv")
         if not path.exists(laps_file):
             td = timedelta(hours=2)
-            if (session.date + td) < utils.time.get_time(session.event.Country, session.event.Location).replace(tzinfo=None):
+            if (session.date + td) < utils.time.get_time(event, year).replace(tzinfo=None):
                 create_save(session, year)
             else:
                 self.fp2 = False
-                self.fp2_Date = utils.time.get_session_date(session)
+                self.fp2_Date = utils.time.get_session_date(session, event, year)
                 if session.event.EventFormat == "sprint":
                     self.fp3 = False
                     self.fp3_Date = "Never"
                     return
                 self.fp3 = False
-                self.fp3_Date = utils.time.get_session_date(fastf1.get_session(year, event, "fp3"))
+                self.fp3_Date = utils.time.get_session_date(fastf1.get_session(year, event, "fp3"), event, year)
                 return
-        self.fp2_Date = utils.time.get_session_date(session)
+        self.fp2_Date = utils.time.get_session_date(session, event, year)
         self._fp2_laps = pd.read_csv(laps_file)
         # tel_file = path.join(base, "data", str(year) + " " + session.event.EventName, f"{session.name}-tel.csv")
         tel_file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}-tel.csv")
@@ -142,13 +143,13 @@ class FreePractice:
         laps_file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}-laps.csv")
         if not path.exists(laps_file):
             td = timedelta(hours=2)
-            if (session.date + td) < utils.time.get_time(session.event.Country, session.event.Location).replace(tzinfo=None):
+            if (session.date + td) < utils.time.get_time(event, year).replace(tzinfo=None):
                 create_save(session, year)
             else:
                 self.fp3 = False
-                self.fp3_Date = utils.time.get_session_date(session)
+                self.fp3_Date = utils.time.get_session_date(session, event, year)
                 return
-        self.fp3_Date = utils.time.get_session_date(session)
+        self.fp3_Date = utils.time.get_session_date(session, event, year)
         self._fp3_laps = pd.read_csv(laps_file)
         # tel_file = path.join(base, "data", str(year) + " " + session.event.EventName, f"{session.name}-tel.csv")
         tel_file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}-tel.csv")

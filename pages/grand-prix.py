@@ -7,8 +7,9 @@ import os.path as path
 import plotly.express as px
 import numpy as np
 import Alpine.strat as strat
+import Alpine.utils as utils
 
-dash.register_page(__name__, path="/grand-prix", path_template="/grand-prix/<year>/<event>/<session>", title="Alpine Fan F1 Dashboard | Grand Prix", description="Get all Formula 1's data on any Grand Prix since 2018. Choose your year, your event and the session then have Fun !", image="images/logo.png")
+dash.register_page(__name__, path="/grand-prix", path_template="/grand-prix/<year>/<event>/<session>", title="Alpine Fan F1 Dashboard | Grand Prix", description="Get all Formula 1's data on any Grand Prix since 2018. Choose your year, your event and the session then have Fun !", image="https://alpinefan.robcorp.net/assets/images/logo.png")
 
 # Setting up the dataframe
 def get_dataframe() :
@@ -177,9 +178,11 @@ def Sprint(year, event, format):
             html.Div(className="plot comming", children=html.P(children=q_date))
         )
     if r:
-        main.append(
-            html.Div(className="plot lap_comp",
-                     children=dcc.Graph(id='race_delta_to_first', figure=sprint.delta_to_first())))
+        try:
+            main.append(html.Div(className="plot lap_comp",
+                         children=dcc.Graph(id='race_delta_to_first', figure=sprint.delta_to_first())))
+        except:
+            utils.error(f"Sprint delta to first from {event} {year} could not be displayed")
         main.append(
             html.Div(className="plot lap_comp", children=dcc.Graph(id='race_lap_times', figure=sprint.lap_times())))
         main.append(
@@ -205,10 +208,13 @@ def Race(year, event, name):
             main.append(
                 html.Div(className="plot lap_comp", children=dcc.Graph(id='race_predict', figure=predict)))
     except:
-        print("error")
+        utils.error(f'Something went wrong went trying to display the prediction of {name} {year}')
     if r:
-        main.append(
-            html.Div(className="plot lap_comp", children=dcc.Graph(id='race_delta_to_first', figure=race.delta_to_first())))
+        try:
+            main.append(
+                html.Div(className="plot lap_comp", children=dcc.Graph(id='race_delta_to_first', figure=race.delta_to_first())))
+        except:
+            utils.error(f"Race delta to first from {name} {year} could not be displayed")
         main.append(
             html.Div(className="plot lap_comp", children=dcc.Graph(id='race_lap_times', figure=race.lap_times())))
         main.append(
@@ -277,6 +283,7 @@ def layout(session=None, year=None, event=None, **other):
         # except:
         #     # TODO : Make it better
         #     page = html.P(children="Sorry there is a problem here")
+        utils.error(f'Something went wrong went trying to display {session} of {chosen_gp.Name.iloc[0]} {year}')
     else:
         page = overview(year, event, chosen_gp)
     if chosen_gp.Format.iloc[0] == "sprint_shootout" or chosen_gp.Format.iloc[0] == "sprint":

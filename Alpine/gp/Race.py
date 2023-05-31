@@ -1,3 +1,4 @@
+import logging
 import warnings
 import fastf1
 import joblib
@@ -26,7 +27,7 @@ class Race:
         file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}.z")
         if not path.exists(file):
             td = timedelta(hours=3)
-            if (session.date + td) < utils.time.get_time(session.event.Country, session.event.Location).replace(
+            if (session.date + td) < utils.time.get_time(event, year).replace(
                     tzinfo=None):
                 session.load()
                 # Setting up laps DataFrame
@@ -49,33 +50,35 @@ class Race:
                 try:
                     driver = session.results.loc[session.results.Position == 1, "Abbreviation"].iloc[0]
                 except:
-                    print("Used alternative way")
+                    logging.info('Results not available the Lap file was used to get the first !')
                     sorted_df = session.laps.sort_values('LapNumber', ascending=False)
                     driver = sorted_df[sorted_df['Position'] == 1].iloc[0]['Driver']
-                for i in self._laps['LapNumber'].unique():
-                    lap_data = self._laps[self._laps['LapNumber'] == i]
-                    self._laps.loc[self._laps['LapNumber'] == i, 'DeltaToFirst'] = lap_data['AltTime'] - lap_data.loc[
-                        lap_data['Driver'] == driver, 'AltTime'].iloc[0]
+                try:
+                    for i in self._laps['LapNumber'].unique():
+                        lap_data = self._laps[self._laps['LapNumber'] == i]
+                        self._laps.loc[self._laps['LapNumber'] == i, 'DeltaToFirst'] = lap_data['AltTime'] - lap_data.loc[
+                            lap_data['Driver'] == driver, 'AltTime'].iloc[0]
+                except:
+                    utils.error(f"Known issue with delta (reload {self._name} {self._name} {year} once fixed)")
                 # weather DataFrame
                 session.weather_data['AltTime'] = session.weather_data.Time.dt.total_seconds() - 3600
                 session.weather_data['AltTime'].loc[session.weather_data['AltTime'] < 0] = np.nan
                 session.weather_data.dropna(axis=0, inplace=True)
                 self._weather = session.weather_data
                 self._results = session.results
-                self.race_Date = utils.time.get_session_date(session)
+                self.race_Date = utils.time.get_session_date(session, event, year)
                 self.race = True
                 joblib.dump(self, file)
             else:
                 self.race = False
-                self.race_Date = utils.time.get_session_date(session)
-                warnings.warn("The session is not done, the data is available 1h after the end of the session.",
-                              Warning, stacklevel=2)
+                self.race_Date = utils.time.get_session_date(session, event, year)
+                logging.info('The session is not done, the data is available 1h after the end of the session.')
                 return
         else:
             race = joblib.load(file)
             self._laps = race._laps
             self._tel = race._tel
-            self.race_Date = utils.time.get_session_date(session)
+            self.race_Date = utils.time.get_session_date(session, event, year)
             self._weather = race._weather
             self._results = race._results
             self.race = True

@@ -10,7 +10,7 @@ log_file = f"{current_date}.log"
 if not os.path.exists("logs"):
     os.mkdir("logs")
 logging.basicConfig(filename=os.path.join("logs", log_file), level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+                    format='%(asctime)s - %(levelname)-8s - %(message)s')
 
 stream_handler = logging.StreamHandler(sys.stdout)
 stream_handler.setLevel(logging.INFO)
