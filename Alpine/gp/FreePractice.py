@@ -70,7 +70,7 @@ class FreePractice:
                 create_save(session, year)
             else:
                 self.fp1 = False
-                self.fp1_Date = utils.time.get_session_date(session)
+                self.fp1_Date = utils.time.get_session_date(session, event, year)
                 if session.event.EventFormat == "sprint_shootout":
                     self.fp2 = False
                     self.fp2_Date = "Never"
