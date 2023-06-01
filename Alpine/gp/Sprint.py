@@ -61,7 +61,7 @@ def sprint_race(session, event, year):
         session.weather_data.dropna(axis=0, inplace=True)
         _weather = session.weather_data
         _results = session.results
-        race_Date = utils.time.get_session_date(session)
+        race_Date = utils.time.get_session_date(session, event, year)
         race = True
         return race, race_Date, name, _laps, _tel, _weather, _results
     else:
