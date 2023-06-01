@@ -9,20 +9,15 @@ logger
 app = Dash(__name__, use_pages=True, external_stylesheets=['https://use.fontawesome.com/releases/v5.7.2/css/all.css'])
 
 server = app.server
+app.scripts.config.serve_locally = False
+app.scripts.append_script({
+    'external_url':"https://www.googletagmanager.com/gtag/js?id=G-7KZYT80WN5"}
+)
+app.scripts.append_script({
+    'external_url':"https://cdn.jsdelivr.net/gh/RobinGuerard21/AlpineFanApp/main/gtag.js"}
+)
 
 app.layout = html.Div(className="window", children=[
-    html.Script(
-        src="https://www.googletagmanager.com/gtag/js?id=G-7KZYT80WN5"
-    ),
-    html.Script(
-        """
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-7KZYT80WN5');
-        """
-    ),
     # Beginning of the sidebar
     html.Div(className="side-bar", children=[
         # Top part of the sidebar
