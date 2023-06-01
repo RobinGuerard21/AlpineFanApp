@@ -11,6 +11,18 @@ app = Dash(__name__, use_pages=True, external_stylesheets=['https://use.fontawes
 server = app.server
 
 app.layout = html.Div(className="window", children=[
+    html.Script(
+        src="https://www.googletagmanager.com/gtag/js?id=G-7KZYT80WN5"
+    ),
+    html.Script(
+        """
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-7KZYT80WN5');
+        """
+    ),
     # Beginning of the sidebar
     html.Div(className="side-bar", children=[
         # Top part of the sidebar
