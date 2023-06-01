@@ -40,11 +40,15 @@ class Race:
                 for driver in drivers:
                     laps = list(session.laps.pick_driver(driver)['LapNumber'])
                     for lap_nb in laps:
-                        lap = session.laps.pick_driver(driver).loc[session.laps['LapNumber'] == lap_nb].iloc[0]
-                        dtel = session.laps.pick_driver(driver).get_car_data().add_distance().slice_by_lap(lap)
-                        dtel['LapNumber'] = lap_nb
-                        dtel['Driver'] = driver
-                        tel = pd.concat([tel, dtel], ignore_index=True)
+                        try:
+                            lap = session.laps.pick_driver(driver).loc[session.laps['LapNumber'] == lap_nb].iloc[0]
+                            dtel = session.laps.pick_driver(driver).get_car_data().add_distance().slice_by_lap(lap)
+                            dtel['LapNumber'] = lap_nb
+                            dtel['Driver'] = driver
+                            tel = pd.concat([tel, dtel], ignore_index=True)
+                        except:
+                            utils.error(
+                                f"Could not get telemetry from lap {lap_nb} of driver {driver} at {session.name} event {session.event.EventName} {year}")
                 self._tel = tel
                 # Live telemetry
                 try:

@@ -47,9 +47,13 @@ class Qualifying:
                 drivers = np.unique(laps.Driver)
                 tel = pd.DataFrame()
                 for i in drivers:
-                    d_tel = laps.pick_driver(i).pick_fastest().get_car_data().add_distance()
-                    d_tel['Driver'] = i
-                    tel = pd.concat([tel, d_tel], ignore_index=True)
+                    try:
+                        d_tel = laps.pick_driver(i).pick_fastest().get_car_data().add_distance()
+                        d_tel['Driver'] = i
+                        tel = pd.concat([tel, d_tel], ignore_index=True)
+                    except:
+                        utils.error(
+                            f"Could not get telemetry for driver {i} at {session.name} event {session.event.EventName} {year}")
                 tel_file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}-tel.csv")
                 tel.to_csv(tel_file, index=False)
                 # weather DataFrame
