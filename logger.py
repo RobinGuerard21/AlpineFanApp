@@ -33,3 +33,9 @@ logger = logging.getLogger('console')
 # Redirect stdout and stderr to the logger
 sys.stdout = StreamToLogger(logger, logging.INFO)
 sys.stderr = StreamToLogger(logger, logging.ERROR)
+
+def close_log_file():
+    logging.shutdown()
+
+# Register the close_log_file function to be called on program exit or reload
+sys.exitfunc = close_log_file

@@ -63,7 +63,7 @@ class Race:
                         self._laps.loc[self._laps['LapNumber'] == i, 'DeltaToFirst'] = lap_data['AltTime'] - lap_data.loc[
                             lap_data['Driver'] == driver, 'AltTime'].iloc[0]
                 except:
-                    utils.error(f"Known issue with delta (reload {self._name} {self._name} {year} once fixed)")
+                    utils.error(f"Known issue with delta (reload {self._name} {self.event_name} {year} once fixed)")
                 # weather DataFrame
                 session.weather_data['AltTime'] = session.weather_data.Time.dt.total_seconds() - 3600
                 session.weather_data['AltTime'].loc[session.weather_data['AltTime'] < 0] = np.nan

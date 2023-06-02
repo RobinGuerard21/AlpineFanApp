@@ -12,7 +12,7 @@ from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
 
-fastf1.Cache.disabled()
+fastf1.Cache.set_disabled()
 
 # applying the template
 utils.template
