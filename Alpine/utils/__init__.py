@@ -88,8 +88,8 @@ def logo(fig, rows=1):
 def error(issue):
     logger = logging.getLogger(__name__)
 
-    file_handler = logging.FileHandler('logs/warnings.log')
-    file_handler.setLevel(logging.INFO)
+    file_handler = logging.FileHandler('logs/alpine.log')
+    file_handler.setLevel(logging.WARNING)
 
     formatter = logging.Formatter('%(asctime)s - %(levelname)-8s - %(message)s')
     file_handler.setFormatter(formatter)
