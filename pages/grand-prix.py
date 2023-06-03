@@ -39,44 +39,44 @@ def make_map(filtered_data) :
 # Création du header pour toutes les différentes pages grand prix
 def header(year, event, session, sprint, first, last):
     if session != "fp" and session != "qualif" and (session != "sprint" or not sprint) and session != "race":
-        head = html.A(children=html.Div(className="active link", children="Overview"),
+        head = html.A(children=html.Div(className="active link", children=[html.Label(className="desktop", children="Overview"), html.Label(className="mobile", children="Home")]),
                        href=f"/grand-prix/{year}/{event}/overview"),
     else:
-        head = html.A(children=html.Div(className="link", children="Overview"),
+        head = html.A(children=html.Div(className="link", children=[html.Label(className="desktop", children="Overview"), html.Label(className="mobile", children="Home")]),
                        href=f"/grand-prix/{year}/{event}/overview"),
     if session == "fp":
-        head += html.A(children=html.Div(className="active link", children="Free Practice"),
+        head += html.A(children=html.Div(className="active link", children=[html.Label(className="desktop", children="Free Practice"), html.Label(className="mobile", children="FP")]),
                        href=f"/grand-prix/{year}/{event}/fp"),
     else:
-        head += html.A(children=html.Div(className="link", children="Free Practice"),
+        head += html.A(children=html.Div(className="link", children=[html.Label(className="desktop", children="Free Practice"), html.Label(className="mobile", children="FP")]),
                        href=f"/grand-prix/{year}/{event}/fp"),
     if session == "qualif":
-        head += html.A(children=html.Div(className="active link", children="Qualification"),
+        head += html.A(children=html.Div(className="active link", children=[html.Label(className="desktop", children="Qualifying"), html.Label(className="mobile", children="Q")]),
                        href=f"/grand-prix/{year}/{event}/qualif"),
     else:
-        head += html.A(children=html.Div(className="link", children="Qualification"),
+        head += html.A(children=html.Div(className="link", children=[html.Label(className="desktop", children="Qualifying"), html.Label(className="mobile", children="Q")]),
                        href=f"/grand-prix/{year}/{event}/qualif"),
     if sprint:
         if session == "sprint":
-            head += html.A(children=html.Div(className="active link", children="Sprint"),
+            head += html.A(children=html.Div(className="active link", children=[html.Label(className="desktop", children="Sprint"), html.Label(className="mobile", children="S")]),
                            href=f"/grand-prix/{year}/{event}/sprint"),
         else:
-            head += html.A(children=html.Div(className="link", children="Sprint"),
+            head += html.A(children=html.Div(className="link", children=[html.Label(className="desktop", children="Sprint"), html.Label(className="mobile", children="S")]),
                            href=f"/grand-prix/{year}/{event}/sprint"),
     if session == "race":
-        head += html.A(children=html.Div(className="active link", children="Race"),
+        head += html.A(children=html.Div(className="active link", children=[html.Label(className="desktop", children="Race"), html.Label(className="mobile", children="Race")]),
                        href=f"/grand-prix/{year}/{event}/race"),
     else:
-        head += html.A(children=html.Div(className="link", children="Race"),
+        head += html.A(children=html.Div(className="link", children=[html.Label(className="desktop", children="Race"), html.Label(className="mobile", children="Race")]),
                        href=f"/grand-prix/{year}/{event}/race"),
     if first[0]:
-        previous = html.A(className="previous change off", children=[html.I(className='fas fa-arrow-left'), "Previous"])
+        previous = html.A(className="previous change off", children=[html.I(className='fas fa-arrow-left'), html.Label(children="Previous")])
     else:
-        previous = html.A(className="previous change", children=[html.I(className='fas fa-arrow-left'), "Previous"], href=f"/grand-prix/{first[1]}/overview")
+        previous = html.A(className="previous change", children=[html.I(className='fas fa-arrow-left'), html.Label(children="Previous")], href=f"/grand-prix/{first[1]}/overview")
     if last[0]:
-        next = html.A(className="next change off", children=["Next", html.I(className='fas fa-arrow-right')])
+        next = html.A(className="next change off", children=[html.Label(children="Next"), html.I(className='fas fa-arrow-right')])
     else:
-        next = html.A(className="next change", children=["Next", html.I(className='fas fa-arrow-right')], href=f"/grand-prix/{last[1]}/overview")
+        next = html.A(className="next change", children=[html.Label(children="Next"), html.I(className='fas fa-arrow-right')], href=f"/grand-prix/{last[1]}/overview")
     return html.Div(className="gp-header", children=[
         html.Div(className="left", children=[
             previous

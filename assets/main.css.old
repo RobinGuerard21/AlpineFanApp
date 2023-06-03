@@ -1,0 +1,357 @@
+html {
+    /*--bg-prime: linear-gradient(#4B749F, #243748, #4B749F);*/
+    --bg-prime: #2c3e50;
+    --bg-secondary: #34495e;
+    --plot: #fffffa;
+    --text-main: #ecf0f1;
+    color: var(--text-main)
+}
+
+.window {
+    background: var(--bg-prime);
+    display: flex;
+    margin: 0;
+}
+
+.side-bar {
+    z-index: 10;
+    background: var(--bg-secondary);
+    height: 90vh;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5vh 50px;
+    border-radius: 0 25px 25px 0;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+}
+
+#map-graph {
+    margin-top: -40px;
+    width: 100%;
+    height: 100%
+}
+
+.content-map {
+    padding: 2.5vh 0;
+    width: calc(100vw - 300px);
+    height: 95vh;
+}
+
+.year {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.year label {
+    color: var(--text-main);
+    font-weight: bold;
+    line-height: 30px;
+    margin-right: 10px;
+}
+
+.year #year-dropdown {
+    width: 100px;
+    z-index: 2;
+}
+
+.year .Select-menu-outer {
+    color: black
+}
+
+.vert-nav .logo {
+    width: 60%;
+    margin: 0 20% 30px;
+}
+
+.vert-nav a {
+    font-size: 16px;
+}
+
+.vert-nav .link {
+    text-align: center;
+    width: 100%;
+    padding: 15px 0;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.vert-nav .link:hover,
+.vert-nav .link:focus {
+    background: linear-gradient(45deg, #595CFF, #369ead);
+    /*background: linear-gradient(45deg, #595CFF, #C6F8FF);*/
+}
+
+.nav-bar {
+    background: var(--bg-secondary);
+    height: 50px;
+    width: calc(100vw - 300px);
+}
+
+.content {
+    padding: 5vh 50px 0;
+    width: calc(100vw - 400px);
+    height: 95vh;
+}
+
+.Comming-soon {
+    width: 100%;
+    height: calc(100% - 5vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 100px;
+}
+
+.gp-header {
+    background: var(--bg-secondary);
+    display: flex;
+    height: 60px;
+    width: -webkit-fill-available;
+    border-radius: 10px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+}
+
+.gp-header .left,
+.gp-header .right {
+    width: 200px
+}
+
+.gp-header .right {
+    display: flex;
+    justify-content: right
+}
+
+.gp-header .change {
+    padding: 10px;
+}
+
+.gp-header .change:hover,
+.gp-header .change:focus {
+    border-radius: 10px;
+    background: linear-gradient(45deg, #595CFF, #369ead);
+}
+
+.gp-header .left i {
+    margin: 0 10px 0 0
+}
+
+.gp-header .right i {
+    margin: 0 0 0 10px
+}
+
+.loc {
+    width: 200px;
+    height: 60px;
+    background: var(--bg-prime);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.loc .change {
+    display: none;
+}
+
+.loc:hover .change {
+    display: inline;
+}
+
+.loc:hover .event {
+    display: none;
+}
+
+.loc small {
+    display: flex;
+    line-height: 5px;
+    justify-content: end;
+}
+
+.hor-nav {
+    display: flex;
+    width: 650px;
+    justify-content: space-between;
+}
+
+.hor-nav .link {
+    text-align: center;
+    width: 120px;
+    padding: 10px 0;
+    border-radius: 10px;
+}
+
+.hor-nav .link:hover,
+.hor-nav .link:focus,
+.hor-nav .link.active{
+    background: linear-gradient(45deg, #595CFF, #369ead);
+}
+
+.main {
+    margin-top: 2.5vh;
+    padding-top: 2.5vh;
+    display: flex;
+    justify-content: space-between;
+    overflow-y: auto;
+    height: calc(100vh - 10vh - 60px);
+    flex-wrap: wrap;
+}
+
+.main::-webkit-scrollbar {
+    display:none
+}
+
+.presentation a {
+    color: #89eaff
+}
+
+.presentation i {
+    margin-right: 10px
+}
+
+.media {
+    width: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0 12.5%;
+}
+
+.plot {
+    background: var(--plot);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+    margin: 16px;
+}
+
+.comming {
+    background: var(--bg-secondary);
+    color: var(--text-main);
+    font-size: 20px;
+    height: 40%;
+    display: flex;
+    align-items: center;
+    text-align: center
+}
+
+.doc-main {
+    padding: 5vh 0;
+    width: calc(100vw - 300px);
+    height: 90vh;
+    display: flex;
+}
+
+.doc-main .left:hover {
+    border-radius: 10px 0 0 10px;
+    background: linear-gradient(-90deg, #2c3e50 25%, #12181f);
+}
+
+.doc-main .right:hover {
+    border-radius: 0 10px 10px 0;
+    background: linear-gradient(90deg, #2c3e50 25%, #12181f);
+}
+
+.doc-main .change {
+    width: 50px;
+    max-width: 50px;
+    min-width: 50px;
+    display: flex;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.md {
+    overflow-y: scroll;
+    height: -webkit-fill-available;
+    background-color: var(--bg-secondary);
+    padding: 2vh 2.5vw;
+    border-radius: 20px;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+}
+
+.md::-webkit-scrollbar {
+    display:none
+}
+
+.md code.hljs {
+    color: var(--text-main);
+    background-color: var(--bg-prime);
+    border-radius: 10px;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+}
+
+.md.doc img {
+    width: 100%
+}
+
+.md span.hljs-string {
+    color: #17f10c;
+}
+
+.md span.hljs-number {
+    color: #ff00e3
+}
+
+.md span.hljs-keyword {
+    color: #ff0000
+}
+
+.md span.hljs-title {
+    color: #ffe200
+}
+
+.md span.hljs-subst {
+    color: #ff8e00
+}
+
+.content.centered {
+    padding: 5vh 50px;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+}
+
+.content.centered .md img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+}
+
+.inner {
+    text-align: center;
+    background-color: var(--bg-secondary);
+    padding: 2vh 0 3vh;
+    border-radius: 25px;
+    box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+    width: 100%;
+    height: fit-content;
+}
+
+@media screen and (min-width: 1400px) {
+  .plot {
+    width: 27%;
+  }
+}
+
+@media screen and (max-width: 1399px) {
+  .plot {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 949px) {
+  .plot {
+    width: 100%;
+  }
+}
+
+.lap_comp {
+    width: 100%;
+}

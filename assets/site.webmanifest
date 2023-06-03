@@ -1,0 +1,5 @@
+// public/site.webmanifest
+{
+  "display": "standalone",
+  "short_name": "Alpine Fan"
+}
