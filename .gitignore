@@ -137,3 +137,4 @@ test
 **/data/
 /logs
 /F1Dashboard-main
+*.old

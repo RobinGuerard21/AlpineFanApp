@@ -8,7 +8,7 @@ def get_page(part):
         with open('README.md', 'r', encoding='utf-8') as f:
             markdown_content = f.read()
         content = html.Div(className="doc-main", children=[
-            html.Div(className="change"),
+            html.Div(className="change left"),
             dcc.Markdown(children=markdown_content, className="md read"),
             html.A(children=html.Div(className="change right", children=html.Div(children=html.I(className="fas fa-chevron-right"))),
                    href="/documentation/process")
@@ -19,7 +19,7 @@ def get_page(part):
         content = html.Div(className="doc-main", children=[
             html.A(children=html.Div(className="change left", children=html.Div(children=html.I(className="fas fa-chevron-left"))), href="/documentation"),
             dcc.Markdown(children=markdown_content, className="md doc"),
-            html.Div(className="change")
+            html.Div(className="change right")
         ])
     return content
 
