@@ -4,6 +4,9 @@ from timezonefinder import TimezoneFinder
 import pytz
 import pandas as pd
 import os.path as path
+import fastf1
+
+fastf1.Cache.set_disabled()
 
 
 def get_timezone_old(country, loc):
@@ -36,3 +39,15 @@ def get_session_date(session, event, year):
     time = local_ts.strftime('%H:%M')
 
     return f"The session will take place {day_of_week} {date} at {time} Paris Time"
+
+def get_latest():
+    now = datetime.now()
+    dt = pd.read_csv("data/dates.csv")
+    dt['Date'] = pd.to_datetime(dt['Date'])
+    dt = dt.loc[dt.Date <= now].sort_values('Date', ascending=False)
+    session = fastf1.get_session(dt.Year.iloc[0], dt.Round.iloc[0], "R")
+    td = timedelta(hours=3)
+    if (session.date + td) < get_time(dt.Round.iloc[0], dt.Year.iloc[0]).replace(tzinfo=None):
+        return f"/grand-prix/{dt.Year.iloc[0]}/{dt.Round.iloc[0]}/race"
+    else:
+        return f"/grand-prix/{dt.Year.iloc[1]}/{dt.Round.iloc[1]}/race"

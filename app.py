@@ -3,19 +3,17 @@ from dash import Dash, html
 import logger
 import flask
 import os
+import Alpine.utils as utils
 
 logger
 
-app = Dash(__name__, use_pages=True, external_stylesheets=['https://use.fontawesome.com/releases/v5.7.2/css/all.css'], meta_tags=[{'name':'viewport','content':"width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1"},{'name':"apple-mobile-web-app-capable",'content':'yes'},{'name':"apple-mobile-web-app-status-bar-style",'content':"black-translucent"}])
+app = Dash(__name__, use_pages=True, external_stylesheets=['https://use.fontawesome.com/releases/v5.7.2/css/all.css'],
+           meta_tags=[{'name': 'viewport',
+                       'content': "width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1"},
+                      {'name': "apple-mobile-web-app-capable", 'content': 'yes'},
+                      {'name': "apple-mobile-web-app-status-bar-style", 'content': "black-translucent"}])
 
 server = app.server
-# app.scripts.config.serve_locally = False
-# app.scripts.append_script({
-#     'external_url': "https://www.googletagmanager.com/gtag/js?id=G-7KZYT80WN5"}
-# )
-# app.scripts.append_script({
-#     'external_url': "https://cdn.jsdelivr.net/gh/RobinGuerard21/AlpineFanApp/main/gtag.js"}
-# )
 
 app.index_string = '''
 <!DOCTYPE html>
@@ -33,10 +31,65 @@ app.index_string = '''
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
+
       gtag('config', 'G-7KZYT80WN5');
     </script>
-    <body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            function splash() {
+                document.getElementById("latest").style.display = "none"
+                document.querySelector("body").classList.add("loading");
+                document.querySelector(".load").classList.add("show");
+                const welcomeText = document.getElementById("welcome");
+                const welcomeMessage = "Welcome!";
+                const delayBetweenLetters = 150; // milliseconds
+
+                let index = 0;
+                function showWelcomeText() {
+                    if (index < welcomeMessage.length) {
+                        welcomeText.innerHTML += welcomeMessage.charAt(index);
+                        index++;
+                        setTimeout(showWelcomeText, delayBetweenLetters);
+                    }
+                }
+
+                setTimeout(showWelcomeText, 500); // Delay before showing the welcome text
+                function close() {
+                    document.querySelector(".load").classList.remove("show");
+                    document.querySelector("body").classList.remove("loading");
+                    document.getElementById("latest").style.display = "block"
+                }
+                setTimeout(close, 2500);    
+            }
+            function latest() {
+                function close_latest() {
+                    document.getElementById("latest").classList.remove("active");
+                }
+                document.getElementById("latest").classList.add("active")
+                setTimeout(close_latest, 5000)
+            }
+            const splashDisplayed = sessionStorage.getItem("splashDisplayed");
+            if (!splashDisplayed) {
+                sessionStorage.setItem("splashDisplayed", "true");
+                splash()
+                setTimeout(latest, 3000)
+            } else {
+                setTimeout(latest, 500)
+            }
+        });
+    </script>
+    <body class="">
+        <div class="load">
+            <div class="logo"><img src="/assets/images/logo.svg"></div>
+            <div id="welcome">
+            </div>
+        </div>
+        <a href="''' + utils.time.get_latest() + '''">
+            <div id="latest" class="">
+                <label class="desktop">Last Race</label>
+                <i class="fas fa-arrow-right"></i>
+            </div>
+        </a>
         {%app_entry%}
         <footer>
             {%config%}
@@ -91,11 +144,18 @@ def favicon():
     return flask.send_from_directory(os.path.join(server.root_path, 'assets'),
                                      'favicon.ico')
 
+
 @server.route('/manifest.webmanifest')
 def manifest():
     return flask.send_from_directory(os.path.join(server.root_path, 'assets'),
                                      'manifest.json', mimetype='application/manifest+json')
 
 
+@server.route('/robots.txt')
+def robot():
+    return flask.send_from_directory(server.root_path,
+                                     'robots.txt')
+
+
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(host='0.0.0.0', port=8050)
