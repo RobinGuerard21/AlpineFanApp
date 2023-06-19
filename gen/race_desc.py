@@ -90,8 +90,8 @@ def gen_desc():
             # Download and save the image
             image_save_path = os.path.join(image_directory, image_filename)
             image_response = requests.get(image_url)
-            # with open(image_save_path, 'wb') as f:
-            #     f.write(image_response.content)
+            with open(image_save_path, 'wb') as f:
+                f.write(image_response.content)
             print(f'Saved data and image from {url}')
         else:
             print(f'Error accessing URL: {url}')
