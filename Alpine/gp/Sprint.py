@@ -22,8 +22,7 @@ utils.template
 def sprint_race(session, event, year):
     name = session.name
     td = timedelta(hours=3)
-    if (session.date + td) < utils.time.get_time(event, year).replace(
-            tzinfo=None):
+    if (session.date + td) < utils.time.userToGmt().replace(tzinfo=None):
         session.load()
         # Setting up laps DataFrame
         session.laps['LapTime (s)'] = session.laps.LapTime.dt.total_seconds()
@@ -66,7 +65,7 @@ def sprint_race(session, event, year):
         return race, race_Date, name, _laps, _tel, _weather, _results
     else:
         race = False
-        race_Date = utils.time.get_session_date(session, event, year)
+        race_Date = utils.time.get_session_date(session.date)
         logging.info('The session is not done, the data is available 1h after the end of the session.')
         return race, race_Date, name, "", "", "", "", ""
 
@@ -88,7 +87,7 @@ class Sprint:
                 # Verifying if the session is done. We add 2h to the beginning of the session to be sure that the data is up
                 # They are usually up 30min after the session (1h for fp)
                 td = timedelta(hours=2)
-                if (session.date + td) < utils.time.get_time(event, year).replace(
+                if (session.date + td) < utils.time.userToGmt().replace(
                         tzinfo=None):
                     session.load()
                     # create the dataframe to be saved with custom cols for easier plots def.
@@ -121,7 +120,7 @@ class Sprint:
                     self.Qualif_Date = utils.time.get_session_date(session, event, year)
                 else:
                     self.Qualif = False
-                    self.Qualif_Date = utils.time.get_session_date(session, event, year)
+                    self.Qualif_Date = utils.time.get_session_date(session.date)
                     logging.info('The session is not done, the data is available 1h after the end of the session.')
                     return
             else:

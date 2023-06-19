@@ -25,18 +25,24 @@ def get_timezone(event, year):
     latitude, longitude = float(chosen_gp.Lat), float(chosen_gp.Long)
     return pytz.timezone(tf.timezone_at(lng=longitude, lat=latitude))
 
+def gmtToUser(time):
+    gmt_timestamp = datetime(time.year, time.month, time.day, time.hour, time.minute, time.second, tzinfo=pytz.timezone('GMT'))
+    paris_timezone = pytz.timezone('Europe/Paris')
 
-def get_time(event, year):
-    return datetime.now(get_timezone(event, year))
+    return gmt_timestamp.astimezone(paris_timezone)
+
+def userToGmt():
+    utc_now = datetime.now(pytz.utc)
+    gmt_timezone = pytz.timezone('GMT')
+
+    return utc_now.astimezone(gmt_timezone)
 
 
-def get_session_date(session, event, year):
-    ts = pd.Timestamp(session.date, tz=get_timezone(event, year))
-    user_tz = pytz.timezone('Europe/Paris')
-    local_ts = ts.tz_convert(user_tz)
-    day_of_week = local_ts.strftime('%A')
-    date = local_ts.strftime('%d %B %Y')
-    time = local_ts.strftime('%H:%M')
+def get_session_date(date):
+    paris_ts = gmtToUser(date)
+    day_of_week = paris_ts.strftime('%A')
+    date = paris_ts.strftime('%d %B %Y')
+    time = paris_ts.strftime('%H:%M')
 
     return f"The session will take place {day_of_week} {date} at {time} Paris Time"
 
@@ -47,7 +53,7 @@ def get_latest():
     dt = dt.loc[dt.Date <= now].sort_values('Date', ascending=False)
     session = fastf1.get_session(dt.Year.iloc[0], dt.Round.iloc[0], "R")
     td = timedelta(hours=3)
-    if (session.date + td) < get_time(dt.Round.iloc[0], dt.Year.iloc[0]).replace(tzinfo=None):
+    if (session.date + td) < userToGmt().replace(tzinfo=None):
         return f"/grand-prix/{dt.Year.iloc[0]}/{dt.Round.iloc[0]}/race"
     else:
         return f"/grand-prix/{dt.Year.iloc[1]}/{dt.Round.iloc[1]}/race"

@@ -191,6 +191,7 @@ body.loading {
 	 justify-content: space-between;
 	 align-items: center;
 	 padding: 0 20px;
+	 position: relative;
 	 z-index: 2;
 	 box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
 }
@@ -266,6 +267,168 @@ body.loading {
  .main::-webkit-scrollbar {
 	 display: none;
 }
+
+.main.overview {
+	flex-direction:column;
+	justify-content: unset;
+	flex-wrap: unset;
+	margin: -10px -2vw;
+	padding: 5vh 2vw 0;
+}
+
+.main.overview .box {
+	box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+	border-radius: 10px;
+	padding: 32px;
+}
+
+.we_title {
+	display: flex;
+	background-color: var(--bg-secondary);
+	border-radius: 10px;
+	justify-content: center;
+	padding: 10px;
+	box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+}
+
+.we_title h1 {
+	margin: 0;
+}
+
+.race {
+	display: flex;
+	background-color: var(--text-main);
+	color: var(--bg-prime);
+	flex-direction: column;
+	border-radius: 10px;
+	justify-content: center;
+	padding: 20px 46px 32px;
+	box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+	margin-top: 32px;
+}
+
+#race-results {
+	display: flex;
+	flex-direction: column;
+	font-size: 18px;
+}
+
+#race-results .driver.full {
+	display: none;
+}
+
+#race-results.display-all .driver.full {
+	display: flex;
+}
+
+.race .title {
+	font-size: 30px;
+	font-family: "Marianne Bold";
+	text-align: center;
+	margin-bottom: 10px
+}
+
+.race .driver {
+	display: flex;
+	justify-content: space-between;
+	padding: 13px;
+	margin: 6.5px 0;
+	border-radius: 10px;
+	box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.2), 0px 3px 20px rgba(0, 0, 0, 0.12), 0px 10px 20px rgba(0, 0, 0, 0.42);
+}
+
+.race .driver .color {
+	width: 10px;
+	border-radius: 5px
+}
+
+.race .driver .evolution {
+	width: 20px;
+	height: 20px;
+	align-self: center;
+	margin: 0 3px 0 10px
+}
+
+.race .driver .pos,
+.race .driver .num,
+.race .driver .pts {
+	width: 30px;
+	text-align: center
+}
+
+.race .driver .name {
+	width: 160px;
+	text-align: center
+}
+
+.race .driver .team {
+	width: 150px;
+	text-align: center
+}
+
+.race .driver .time {
+	width: 110px;
+	text-align: center
+}
+
+#more-race {
+	width: 85px;
+	align-self:center
+}
+
+.overview .stats {
+	width: 35%;
+	padding: 3%;
+	margin: 32px 4% 32px 0;
+	background: var(--bg-secondary);
+}
+
+.overview .stats .track_name {
+	font-size: 18px;
+	margin-bottom: 10px
+}
+
+.overview .stats .infos {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 90%;
+}
+
+.overview .stats .Label {
+	margin: 0 0 2px
+}
+
+.overview .stats .stat {
+	margin: 0;
+	font-size: 24px
+}
+
+.overview .stats .stat small {
+	font-size: 14px
+}
+
+.circuit {
+	width: 60%;
+	margin: 32px 0 32px;
+	background: #ecf0f1
+}
+
+.story,
+.why {
+	background: var(--text-main);
+	color: var(--bg-prime);
+	margin: 32px 0;
+}
+
+.where {
+	margin-bottom: 5vh
+}
+
+.built, .like, .where {
+	background: var(--bg-secondary)
+}
+
  .presentation a {
 	 color: #89eaff;
 }
@@ -449,18 +612,66 @@ body.loading {
 		right: 0;
 	}
 
-	 .plot {
-		 width: 100%;
+	.flex {
+		flex-direction: column
 	}
-	 .side-bar {
-		 width: 50px;
-		 position: fixed;
-		 padding: 5vh 10px 5vh 50px;
-		 transition: all 0.5s ease-in-out;
+
+/* 	Style for Grand-Priw Overview */
+
+	.overview h1 {
+		font-size: 24px
 	}
-	 .side-bar:focus, .side-bar:hover {
-		 width: 200px;
-		 padding: 5vh 50px;
+
+	.overview .stats {
+		width: auto;
+		margin: 32px 0 0
+	}
+
+	.overview .stats .infos {
+		flex-direction: row;
+		height: auto;
+	}
+
+	.overview .stats .Label {
+		font-size: 14px
+	}
+
+	.overview .stats .stat {
+		font-size: 16px
+	}
+
+	.overview .stats .stat small {
+		font-size: 10px
+	}
+
+	.overview .circuit {
+		width: auto
+	}
+
+	#race-results {
+		font-size: 12px
+	}
+
+
+	.race .driver .flex {
+		flex-direction: row
+	}
+
+/* 	End style Grand-Prix Overview */
+
+	.plot {
+		width: 100%;
+	}
+	.side-bar {
+		width: 50px;
+		position: fixed;
+		padding: 5vh 10px 5vh 10px;
+		padding: 5vh 10px 5vh calc(10px + env(safe-area-inset-left));
+		transition: all 0.5s ease-in-out;
+	}
+	.side-bar:focus, .side-bar:hover {
+		width: 200px;
+		padding: 5vh 50px;
 	}
 	 .side-bar:focus .logo, .side-bar:hover .logo {
 		 width: 120px;
@@ -481,7 +692,10 @@ body.loading {
 	}
 	 .content {
 		 position: fixed;
-		 left: 110px;
+		 left: 70px;
+		 left: calc(60px + env(safe-area-inset-left));
+		 right: 0;
+		 width: auto;
 		 margin: 0;
 	}
 
@@ -599,8 +813,60 @@ body.loading {
 		 right: 0;
 		 left: 0;
 		 bottom: 0;
-		 //bottom: calc(0px - env(safe-area-inset-top));
 	 }
+
+
+
+	.flex {
+		flex-direction: column
+	}
+
+/* 	Style for Grand-Priw Overview */
+
+	.overview h1 {
+		font-size: 24px
+	}
+
+	.overview .stats {
+		width: auto;
+		margin: 32px 0 0
+	}
+
+	.overview .stats .infos {
+		flex-direction: row;
+		height: auto;
+	}
+
+	.overview .stats .Label {
+		font-size: 14px
+	}
+
+	.overview .stats .stat {
+		font-size: 16px
+	}
+
+	.overview .stats .stat small {
+		font-size: 10px
+	}
+
+	.overview .circuit {
+		width: auto
+	}
+
+	#race-results {
+		font-size: 12px;
+		overflow-y: hidden;
+		margin: -46px;
+		padding: 46px;
+	}
+
+
+	.race .driver .flex {
+		flex-direction: row
+	}
+
+/* 	End style Grand-Prix Overview */
+
 	 .side-bar, .side-bar:hover, .sidebar:focus {
 		 width: 100vw;
 		 padding: 15px 0;
@@ -610,7 +876,6 @@ body.loading {
 		 position: fixed;
 		 top: auto;
 		 bottom: 0;
-		 //bottom: calc(0px - env(safe-area-inset-top));
 		 justify-content: space-between;
 		 flex-direction: row;
 	}
@@ -680,7 +945,7 @@ body.loading {
 		 position: fixed;
 		 top: 0;
 		 left: 0;
-		 padding: 37px 20px 0;
+		 padding: 0 20px;
 		 border-radius: 0 0 10px 10px;
 	}
 
@@ -729,9 +994,42 @@ body.loading {
 		font-size: 8vw;
 		height: 11vw;
 	}
+
+
+
+	#race-results {
+		font-size: 12px;
+		overflow-y: hidden;
+		margin: -46px;
+		padding: 46px;
+	}
+
+	.race .driver {
+		width: 450px;
+		overflow-y: auto;
+		/* margin: 6.5px -20px; */
+	}
+
+	.race .driver .flex {
+		flex-direction: row
+	}
+	.overview .stats {
+		overflow-y: hidden;
+	}
+
+	.overview .stats .track_name {
+		position: sticky;
+		top: 0;
+		left: 0;
+	}
+
+	.overview .stats .infos {
+		width: 700px;
+	}
 }
 
 @media screen and (max-width: 500px) {
+
     .side-bar, .side-bar:hover, .sidebar:focus {
 		 height: 40px;
 	}
@@ -823,7 +1121,6 @@ body.loading {
 }
 
 @media screen and (max-width: 420px) {
-/* 	// **************************************** Debug ************************************** */
 	body {
 		position: fixed;
 	/*	bottom: calc(0 - env(safe-area-inset-top));*/
@@ -833,23 +1130,19 @@ body.loading {
 		background-color: var(--bg-secondary);
 	}
 
-/*	#react-entry-point {
-		position: absolute;
-		bottom: 0;
-		top: 0;
-		width: 100%;
-		background-color: green;
+	.main.overview {
+		margin: -10px 0;
+		width: 92vw;
+		padding: 3vh 4vw;
 	}
 
-	#_dash-global-error-container {
-		background-color: aqua;
+	.overview h1 {
+		font-size: 20px;
 	}
 
-	#_dash-app-content {
-		background-color: blueviolet;
+	#race-results {
+		padding: 46px 20px
 	}
-
-	 ************************************* End Debug ************************************* */
 
 
 	.side-bar, .side-bar:hover, .sidebar:focus {
@@ -931,7 +1224,7 @@ body.loading {
 		 font-size: 25px;
 	}
     .gp-header {
-		 padding: 37px 0 0;
+		 /* padding: 37px 0 0; */
 		 border-radius: 0 0 10px 10px;
 	}
 }

@@ -4,8 +4,8 @@ import logger
 import flask
 import os
 import Alpine.utils as utils
+import gen.data
 
-logger
 
 app = Dash(__name__, use_pages=True, external_stylesheets=['https://use.fontawesome.com/releases/v5.7.2/css/all.css'],
            meta_tags=[{'name': 'viewport',
@@ -158,4 +158,4 @@ def robot():
 
 
 if __name__ == '__main__':
-    app.run_server(host='0.0.0.0', port=8050)
+    app.run_server(host='0.0.0.0', port=8050, debug=True)

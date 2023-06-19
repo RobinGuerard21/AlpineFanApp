@@ -24,7 +24,7 @@ def create_save(session, year):
     # create the dataframe to be saved with custom cols for easier plots def.
     laps = session.laps
     laps['LapTime (s)'] = laps.LapTime.dt.total_seconds()
-    laps['AltTime'] = laps.Time.dt.total_seconds() - 1100
+    laps['AltTime'] = laps.Time.dt.total_seconds() - 900
     threshold = 1.1
     threshold_lap_time = laps.pick_fastest()['LapTime (s)'] * threshold
     laps.loc[laps['LapTime (s)'] >= threshold_lap_time, 'LapTime (s)'] = np.nan
@@ -70,11 +70,11 @@ class FreePractice:
             # Verifying if the session is done. We add 2h to the beginning of the session to be sure that the data is up
             # They are usually up 30min after the session (1h for fp)
             td = timedelta(hours=2)
-            if (session.date + td) < utils.time.get_time(event, year).replace(tzinfo=None):
+            if (session.date + td) < utils.time.userToGmt().replace(tzinfo=None):
                 create_save(session, year)
             else:
                 self.fp1 = False
-                self.fp1_Date = utils.time.get_session_date(session, event, year)
+                self.fp1_Date = utils.time.get_session_date(session.date)
                 if session.event.EventFormat == "sprint_shootout":
                     self.fp2 = False
                     self.fp2_Date = "Never"
@@ -82,16 +82,16 @@ class FreePractice:
                     self.fp3_Date = "Never"
                     return
                 self.fp2 = False
-                self.fp2_Date = utils.time.get_session_date(session, event, year)
+                self.fp2_Date = utils.time.fastf1.get_session(year, event, "fp2").date
                 if session.event.EventFormat == "sprint":
                     self.fp3 = False
                     self.fp3_Date = "Never"
                     return
                 self.fp3 = False
-                self.fp3_Date = utils.time.get_session_date(fastf1.get_session(year, event, "fp3"), event, year)
+                self.fp3_Date = utils.time.get_session_date(fastf1.get_session(year, event, "fp3").date)
                 logging.info('The session is not done, the data is available 1h after the end of the session.')
                 return
-        self.fp1_Date = utils.time.get_session_date(session, event, year)
+        self.fp1_Date = utils.time.get_session_date(session.date)
         self._fp1_laps = pd.read_csv(laps_file)
         # tel_file = path.join(base, "data", str(year) + " " + session.event.EventName, f"{session.name}-tel.csv")
         tel_file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}-tel.csv")
@@ -114,19 +114,19 @@ class FreePractice:
         laps_file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}-laps.csv")
         if not path.exists(laps_file):
             td = timedelta(hours=2)
-            if (session.date + td) < utils.time.get_time(event, year).replace(tzinfo=None):
+            if (session.date + td) < utils.time.userToGmt().replace(tzinfo=None):
                 create_save(session, year)
             else:
                 self.fp2 = False
-                self.fp2_Date = utils.time.get_session_date(session, event, year)
+                self.fp2_Date = utils.time.get_session_date(session.date)
                 if session.event.EventFormat == "sprint":
                     self.fp3 = False
                     self.fp3_Date = "Never"
                     return
                 self.fp3 = False
-                self.fp3_Date = utils.time.get_session_date(fastf1.get_session(year, event, "fp3"), event, year)
+                self.fp3_Date = utils.time.get_session_date(fastf1.get_session(year, event, "fp3").date)
                 return
-        self.fp2_Date = utils.time.get_session_date(session, event, year)
+        self.fp2_Date = utils.time.get_session_date(session.date)
         self._fp2_laps = pd.read_csv(laps_file)
         # tel_file = path.join(base, "data", str(year) + " " + session.event.EventName, f"{session.name}-tel.csv")
         tel_file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}-tel.csv")
@@ -147,13 +147,13 @@ class FreePractice:
         laps_file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}-laps.csv")
         if not path.exists(laps_file):
             td = timedelta(hours=2)
-            if (session.date + td) < utils.time.get_time(event, year).replace(tzinfo=None):
+            if (session.date + td) < utils.time.userToGmt().replace(tzinfo=None):
                 create_save(session, year)
             else:
                 self.fp3 = False
-                self.fp3_Date = utils.time.get_session_date(session, event, year)
+                self.fp3_Date = utils.time.get_session_date(session.date)
                 return
-        self.fp3_Date = utils.time.get_session_date(session, event, year)
+        self.fp3_Date = utils.time.get_session_date(session.date)
         self._fp3_laps = pd.read_csv(laps_file)
         # tel_file = path.join(base, "data", str(year) + " " + session.event.EventName, f"{session.name}-tel.csv")
         tel_file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}-tel.csv")

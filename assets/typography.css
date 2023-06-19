@@ -28,3 +28,7 @@ a:hover,
 a:focus {
     font-family: "Marianne Bold";
 }
+
+.flex {
+    display: flex;
+}

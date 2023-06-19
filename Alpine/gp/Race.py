@@ -27,8 +27,7 @@ class Race:
         file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}.z")
         if not path.exists(file):
             td = timedelta(hours=3)
-            if (session.date + td) < utils.time.get_time(event, year).replace(
-                    tzinfo=None):
+            if (session.date + td) < utils.time.userToGmt().replace(tzinfo=None):
                 session.load()
                 # Setting up laps DataFrame
                 session.laps['LapTime (s)'] = session.laps.LapTime.dt.total_seconds()
@@ -70,19 +69,19 @@ class Race:
                 session.weather_data.dropna(axis=0, inplace=True)
                 self._weather = session.weather_data
                 self._results = session.results
-                self.race_Date = utils.time.get_session_date(session, event, year)
+                self.race_Date = utils.time.get_session_date(session.date)
                 self.race = True
                 joblib.dump(self, file)
             else:
                 self.race = False
-                self.race_Date = utils.time.get_session_date(session, event, year)
+                self.race_Date = utils.time.get_session_date(session.date)
                 logging.info('The session is not done, the data is available 1h after the end of the session.')
                 return
         else:
             race = joblib.load(file)
             self._laps = race._laps
             self._tel = race._tel
-            self.race_Date = utils.time.get_session_date(session, event, year)
+            self.race_Date = utils.time.get_session_date(session.date)
             self._weather = race._weather
             self._results = race._results
             self.race = True
