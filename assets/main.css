@@ -273,6 +273,7 @@ body.loading {
 	justify-content: unset;
 	flex-wrap: unset;
 	margin: -10px -2vw;
+	height: calc(95vh - 60px - 5vh + 10px);
 	padding: 5vh 2vw 0;
 }
 
