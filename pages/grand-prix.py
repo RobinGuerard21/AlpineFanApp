@@ -293,53 +293,53 @@ def overview(year, event, gp):
     content.append(
         html.Div(className="we_title", children=html.H1(children=f"Round {gp.Round.iloc[0]} : {gp.Name.iloc[0]}")))
 
-    # try:
-    results = f1.get_race(year, event).results
-    classement = []
-    d_color = html.Div(className="color")
-    change = html.Div(className="evolution")
-    d_pos = html.Div(className="pos", children="Pos")
-    d_num = html.Div(className="num", children="N°")
-    d_name = html.Div(className="name", children="Driver")
-    d_team = html.Div(className="team", children="Team")
-    d_time = html.Div(className="time",children=f"Time")
-    d_pts = html.Div(className="pts", children="Pts")
-    classement.append(
-        html.Div(className="driver row", children=[html.Div(className="flex",children=[d_color, change, d_pos]), d_num, d_name, d_team, d_time, d_pts])
-    )
-    for index, row in results.iterrows():
-        d_color = html.Div(className="color", style={"background-color": f"#{row['TeamColor']}"})
-        if (row['Position'] - row['GridPosition']) < 0:
-            change = html.Img(className="evolution", src="/assets/images/grow.svg")
-        elif (row['Position'] - row['GridPosition']) == 0:
-            change = html.Img(className="evolution", src="/assets/images/stable.svg")
-        elif (row['Position'] - row['GridPosition']) > 0:
-            change = html.Img(className="evolution", src="/assets/images/decrease.svg")
-        d_pos = html.Div(className="pos", children=row['ClassifiedPosition'])
-        d_num = html.Div(className="num", children=row['DriverNumber'])
-        d_name = html.Div(className="name", children=row['FullName'])
-        d_team = html.Div(className="team", children=row['TeamName'])
-        if row['Position'] == 1:
-            d_time = html.Div(className="time",
-                              children=f"{row['Time'].seconds // 3600:02d}:{(row['Time'].seconds // 60) % 60:02d}:{row['Time'].seconds % 60:02d}.{int(row['Time'].total_seconds() * 1000) % 1000:03d}")
-        elif pd.isnull(row.Time):
-            d_time = html.Div(className="time", children=row['Status'])
-        else:
-            d_time = html.Div(className="time",
-                              children=f"{row['Time'].total_seconds():.3f}s")
-        d_pts = html.Div(className="pts", children=row['Points'])
-        if row['Position'] < 4:
-            cl = "driver"
-        else:
-            cl = "driver full"
-        classement.append(
-            html.Div(className=cl,
-                     children=[html.Div(className="flex",children=[d_color, change, d_pos]), d_num, d_name, d_team, d_time, d_pts])
-        )
-    more = html.Img(id="more-race", src="/assets/images/more.svg")
-    content.append(html.Div(className="race", children=[html.Div(className="title", children="Race Results"), html.Div(id="race-results", children=classement), more]))
-    # except:
-    #     results = 0
+    try:
+    	results = f1.get_race(year, event).results
+    	classement = []
+    	d_color = html.Div(className="color")
+    	change = html.Div(className="evolution")
+    	d_pos = html.Div(className="pos", children="Pos")
+    	d_num = html.Div(className="num", children="N°")
+    	d_name = html.Div(className="name", children="Driver")
+    	d_team = html.Div(className="team", children="Team")
+    	d_time = html.Div(className="time",children=f"Time")
+    	d_pts = html.Div(className="pts", children="Pts")
+    	classement.append(
+        	html.Div(className="driver row", children=[html.Div(className="flex",children=[d_color, change, d_pos]), d_num, d_name, d_team, d_time, d_pts])
+    	)
+    	for index, row in results.iterrows():
+        	d_color = html.Div(className="color", style={"background-color": f"#{row['TeamColor']}"})
+        	if (row['Position'] - row['GridPosition']) < 0:
+            		change = html.Img(className="evolution", src="/assets/images/grow.svg")
+        	elif (row['Position'] - row['GridPosition']) == 0:
+            		change = html.Img(className="evolution", src="/assets/images/stable.svg")
+        	elif (row['Position'] - row['GridPosition']) > 0:
+            		change = html.Img(className="evolution", src="/assets/images/decrease.svg")
+        	d_pos = html.Div(className="pos", children=row['ClassifiedPosition'])
+        	d_num = html.Div(className="num", children=row['DriverNumber'])
+        	d_name = html.Div(className="name", children=row['FullName'])
+        	d_team = html.Div(className="team", children=row['TeamName'])
+        	if row['Position'] == 1:
+            		d_time = html.Div(className="time",
+                        	      children=f"{row['Time'].seconds // 3600:02d}:{(row['Time'].seconds // 60) % 60:02d}:{row['Time'].seconds % 60:02d}.{int(row['Time'].total_seconds() * 1000) % 1000:03d}")
+        	elif pd.isnull(row.Time):
+            		d_time = html.Div(className="time", children=row['Status'])
+        	else:
+            		d_time = html.Div(className="time",
+                        	      children=f"{row['Time'].total_seconds():.3f}s")
+        	d_pts = html.Div(className="pts", children=row['Points'])
+        	if row['Position'] < 4:
+            		cl = "driver"
+        	else:
+            		cl = "driver full"
+        	classement.append(
+            		html.Div(className=cl,
+                     		children=[html.Div(className="flex",children=[d_color, change, d_pos]), d_num, d_name, d_team, d_time, d_pts])
+        		)
+    	more = html.Img(id="more-race", src="/assets/images/more.svg")
+    	content.append(html.Div(className="race", children=[html.Div(className="title", children="Race Results"), html.Div(id="race-results", children=classement), more]))
+    except:
+        results = 0
 
     track_stats = [
         html.Div(className="track_name", children=race['name']),
