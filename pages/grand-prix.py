@@ -43,6 +43,114 @@ def make_map(filtered_data):
     return map_fig
 
 
+def race_result(content, results):
+    classement = []
+    d_color = html.Div(className="color")
+    change = html.Div(className="evolution")
+    d_pos = html.Div(className="pos", children="Pos")
+    d_num = html.Div(className="num", children="N°")
+    d_name = html.Div(className="name", children="Driver")
+    d_team = html.Div(className="team", children="Team")
+    d_time = html.Div(className="time", children=f"Time")
+    d_pts = html.Div(className="pts", children="Pts")
+    classement.append(
+        html.Div(className="driver row",
+                 children=[html.Div(className="flex", children=[d_color, change, d_pos]), d_num, d_name, d_team, d_time,
+                           d_pts])
+    )
+    for index, row in results.iterrows():
+        d_color = html.Div(className="color", style={"background-color": f"#{row['TeamColor']}"})
+        if (row['Position'] - row['GridPosition']) < 0:
+            change = html.Img(className="evolution", src="/assets/images/grow.svg")
+        elif (row['Position'] - row['GridPosition']) == 0:
+            change = html.Img(className="evolution", src="/assets/images/stable.svg")
+        elif (row['Position'] - row['GridPosition']) > 0:
+            change = html.Img(className="evolution", src="/assets/images/decrease.svg")
+        d_pos = html.Div(className="pos", children=row['ClassifiedPosition'])
+        d_num = html.Div(className="num", children=row['DriverNumber'])
+        d_name = html.Div(className="name", children=row['FullName'])
+        d_team = html.Div(className="team", children=row['TeamName'])
+        if row['Position'] == 1:
+            d_time = html.Div(className="time",
+                              children=f"{row['Time'].seconds // 3600:02d}:{(row['Time'].seconds // 60) % 60:02d}:{row['Time'].seconds % 60:02d}.{int(row['Time'].total_seconds() * 1000) % 1000:03d}")
+        elif pd.isnull(row.Time):
+            d_time = html.Div(className="time", children=row['Status'])
+        else:
+            d_time = html.Div(className="time",
+                              children=f"{row['Time'].total_seconds():.3f}s")
+        d_pts = html.Div(className="pts", children=row['Points'])
+        if row['Position'] < 4:
+            cl = "driver"
+        else:
+            cl = "driver full"
+        classement.append(
+            html.Div(className=cl,
+                     children=[html.Div(className="flex", children=[d_color, change, d_pos]), d_num, d_name, d_team,
+                               d_time,
+                               d_pts])
+        )
+    more = html.Img(id="more-race", src="/assets/images/more.svg")
+    content.append(html.Div(className="race", children=[html.Div(className="title", children="Race Results"),
+                                                        html.Div(id="race-results", children=classement), more]))
+    return content
+
+
+def qualy_result(content, results):
+    classement = []
+    d_color = html.Div(className="color")
+    d_pos = html.Div(className="pos", children="Pos")
+    d_num = html.Div(className="num", children="N°")
+    d_name = html.Div(className="name", children="Driver")
+    d_team = html.Div(className="team", children="Team")
+    d_time = html.Div(className="time", children="Q1")
+    d_time2 = html.Div(className="time", children="Q2")
+    d_time3 = html.Div(className="time", children="Q3")
+    classement.append(
+        html.Div(className="driver row",
+                 children=[html.Div(className="flex", children=[d_color, d_pos]), d_num, d_name, d_team, d_time,
+                           d_time2, d_time3])
+    )
+
+    results.Q1 = pd.to_timedelta(results.Q1)
+    results.Q2 = pd.to_timedelta(results.Q2)
+    results.Q3 = pd.to_timedelta(results.Q3)
+
+    def Q_time(time, results_time):
+        if not pd.isnull(time):
+            if time == results_time.min():
+                classname = "time min"
+            else:
+                classname = "time"
+            d_time = html.Div(className=classname,
+                              children=f"{(time.seconds // 60) % 60:02d}:{time.seconds % 60:02d}.{int(time.total_seconds() * 1000) % 1000:03d}")
+        else:
+            d_time = html.Div(className="time", children="-")
+        return d_time
+
+    for index, row in results.iterrows():
+        d_color = html.Div(className="color", style={"background-color": f"#{row['TeamColor']}"})
+        d_pos = html.Div(className="pos", children=row['Position'])
+        d_num = html.Div(className="num", children=row['DriverNumber'])
+        d_name = html.Div(className="name", children=row['FullName'])
+        d_team = html.Div(className="team", children=row['TeamName'])
+        d_time = Q_time(row.Q1, results.Q1)
+        d_time2 = Q_time(row.Q2, results.Q2)
+        d_time3 = Q_time(row.Q3, results.Q3)
+        if row['Position'] < 4:
+            cl = "driver"
+        else:
+            cl = "driver full"
+        classement.append(
+            html.Div(className=cl,
+                     children=[html.Div(className="flex", children=[d_color, d_pos]), d_num, d_name, d_team, d_time,
+                               d_time2, d_time3])
+        )
+    more = html.Img(id="more-race", src="/assets/images/more.svg")
+    content.append(html.Div(className="race", children=[html.Div(className="title", children="Race Results"),
+                                                        html.Div(id="race-results", children=classement), more]))
+    return content
+
+
 # Création du header pour toutes les différentes pages grand prix
 def header(year, event, session, sprint, first, last):
     if session != "fp" and session != "qualif" and (session != "sprint" or not sprint) and session != "race":
@@ -171,11 +279,15 @@ def fp(year, event):
         "top_speed"] + comming + parts["lap_comp"]
 
 
-def Qualy(year, event):
+def Qualy(year, event, name):
     qualy = f1.get_quali(year, event)
     q, date = qualy.get_load
     main = []
     if q:
+        try:
+            main = qualy_result(main, qualy.results)
+        except:
+            utils.error(f"Could not show Qualy results for {name} {year}")
         main.append(
             html.Div(className="plot lap_times", children=dcc.Graph(id='qualy_lap_times', figure=qualy.lap_times())))
         main.append(
@@ -193,10 +305,15 @@ def Qualy(year, event):
     return main
 
 
-def Sprint(year, event, format):
+def Sprint(year, event, format, name):
     sprint = f1.get_sprint(year, event, format)
     q, r, q_date, r_date = sprint.get_load
     main = []
+    try:
+        main = race_result(main, sprint.results)
+    except:
+        if r:
+            utils.error(f"Could not show Race results for {name} {year}")
     if format == "sprint_shootout" and q:
         main.append(
             html.Div(className="plot lap_times",
@@ -250,6 +367,10 @@ def Race(year, event, name):
         utils.error(f'Something went wrong went trying to display the prediction of {name} {year}')
     if r:
         try:
+            main = race_result(main, race.results)
+        except:
+            utils.error(f"Could not show Race results for {name} {year}")
+        try:
             main.append(
                 html.Div(className="plot lap_comp",
                          children=dcc.Graph(id='race_delta_to_first', figure=race.delta_to_first())))
@@ -274,11 +395,11 @@ def content(year, event, session, we):
     if session == "fp":
         main = fp(year, event)
     elif session == "qualif":
-        main = Qualy(year, event)
+        main = Qualy(year, event, we.Name.iloc[0])
     elif session == "race":
         main = Race(year, event, we.Name.iloc[0])
     elif session == "sprint":
-        main = Sprint(year, event, we.Format.iloc[0])
+        main = Sprint(year, event, we.Format.iloc[0], we.Name.iloc[0])
     else:
         main = "overall"
     return html.Div(className="main", children=main)
@@ -287,57 +408,14 @@ def content(year, event, session, we):
 def overview(year, event, gp):
     with open(path.join("data", 'races_desc.json'), 'r') as f:
         races_info = json.load(f)
-    # Todo : WE Overview
     race = races_info[gp.Name.iloc[0]]
     content = []
     content.append(
         html.Div(className="we_title", children=html.H1(children=f"Round {gp.Round.iloc[0]} : {gp.Name.iloc[0]}")))
 
     try:
-    	results = f1.get_race(year, event).results
-    	classement = []
-    	d_color = html.Div(className="color")
-    	change = html.Div(className="evolution")
-    	d_pos = html.Div(className="pos", children="Pos")
-    	d_num = html.Div(className="num", children="N°")
-    	d_name = html.Div(className="name", children="Driver")
-    	d_team = html.Div(className="team", children="Team")
-    	d_time = html.Div(className="time",children=f"Time")
-    	d_pts = html.Div(className="pts", children="Pts")
-    	classement.append(
-        	html.Div(className="driver row", children=[html.Div(className="flex",children=[d_color, change, d_pos]), d_num, d_name, d_team, d_time, d_pts])
-    	)
-    	for index, row in results.iterrows():
-        	d_color = html.Div(className="color", style={"background-color": f"#{row['TeamColor']}"})
-        	if (row['Position'] - row['GridPosition']) < 0:
-            		change = html.Img(className="evolution", src="/assets/images/grow.svg")
-        	elif (row['Position'] - row['GridPosition']) == 0:
-            		change = html.Img(className="evolution", src="/assets/images/stable.svg")
-        	elif (row['Position'] - row['GridPosition']) > 0:
-            		change = html.Img(className="evolution", src="/assets/images/decrease.svg")
-        	d_pos = html.Div(className="pos", children=row['ClassifiedPosition'])
-        	d_num = html.Div(className="num", children=row['DriverNumber'])
-        	d_name = html.Div(className="name", children=row['FullName'])
-        	d_team = html.Div(className="team", children=row['TeamName'])
-        	if row['Position'] == 1:
-            		d_time = html.Div(className="time",
-                        	      children=f"{row['Time'].seconds // 3600:02d}:{(row['Time'].seconds // 60) % 60:02d}:{row['Time'].seconds % 60:02d}.{int(row['Time'].total_seconds() * 1000) % 1000:03d}")
-        	elif pd.isnull(row.Time):
-            		d_time = html.Div(className="time", children=row['Status'])
-        	else:
-            		d_time = html.Div(className="time",
-                        	      children=f"{row['Time'].total_seconds():.3f}s")
-        	d_pts = html.Div(className="pts", children=row['Points'])
-        	if row['Position'] < 4:
-            		cl = "driver"
-        	else:
-            		cl = "driver full"
-        	classement.append(
-            		html.Div(className=cl,
-                     		children=[html.Div(className="flex",children=[d_color, change, d_pos]), d_num, d_name, d_team, d_time, d_pts])
-        		)
-    	more = html.Img(id="more-race", src="/assets/images/more.svg")
-    	content.append(html.Div(className="race", children=[html.Div(className="title", children="Race Results"), html.Div(id="race-results", children=classement), more]))
+        results = f1.get_race(year, event).results
+        content = race_result(content, results)
     except:
         results = 0
 
@@ -361,18 +439,23 @@ def overview(year, event, gp):
         ])
     ]
     content.append(html.Div(className="flex", children=[html.Div(className="box stats", children=track_stats),
-                                                       html.Img(className="box circuit", src=f"/{race['image']}")]))
+                                                        html.Img(className="box circuit", src=f"/{race['image']}")]))
 
     content.append(html.Div(className="box built", children=[html.H1(children="When was the track built?"),
-                                                              html.P(children=race["built"].replace('\u00e2\u0080\u0099', '’'))]))
+                                                             html.P(children=race["built"].replace('\u00e2\u0080\u0099',
+                                                                                                   '’'))]))
     content.append(html.Div(className="box story", children=[html.H1(children="When was its first Grand Prix?"),
-                                                              html.P(children=race["first_gp-story"].replace('\u00e2\u0080\u0099', '’'))]))
+                                                             html.P(children=race["first_gp-story"].replace(
+                                                                 '\u00e2\u0080\u0099', '’'))]))
     content.append(html.Div(className="box like", children=[html.H1(children="What’s the circuit like?"),
-                                                              html.P(children=race["like"].replace('\u00e2\u0080\u0099', '’'))]))
+                                                            html.P(children=race["like"].replace('\u00e2\u0080\u0099',
+                                                                                                 '’'))]))
     content.append(html.Div(className="box why", children=[html.H1(children="Why go?"),
-                                                              html.P(children=race["why"].replace('\u00e2\u0080\u0099', '’'))]))
+                                                           html.P(children=race["why"].replace('\u00e2\u0080\u0099',
+                                                                                               '’'))]))
     content.append(html.Div(className="box where", children=[html.H1(children="Where is the best place to watch?"),
-                                                              html.P(children=race["where"].replace('\u00e2\u0080\u0099', '’'))]))
+                                                             html.P(children=race["where"].replace('\u00e2\u0080\u0099',
+                                                                                                   '’'))]))
 
     return html.Div(className="main overview", children=content)
 
@@ -457,6 +540,7 @@ def update_url(clickData):
         round = clickData['points'][0]['customdata'][1]
         # Mettre à jour l'URL avec le nom du pays
         return f'/grand-prix/{year}/{round}/overview/'
+
 
 @dash.callback(
     [dash.dependencies.Output("race-results", "className"), dash.dependencies.Output("more-race", "src")],

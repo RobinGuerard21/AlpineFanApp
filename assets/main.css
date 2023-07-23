@@ -289,13 +289,14 @@ body.loading {
 }
 
 .main {
-	padding-top: 2.5vh;
 	display: flex;
 	justify-content: space-between;
 	overflow-y: auto;
-	height: calc(100vh - 7.5vh - 60px);
+	height: calc(100vh - 7.5vh - 50px);
 	flex-wrap: wrap;
 	z-index: 1;
+	margin: -10px -50px 0;
+	padding: 2.5vh 50px 0;
 }
 
 .main::-webkit-scrollbar {
@@ -330,7 +331,7 @@ body.loading {
 	margin: 0;
 }
 
-.race {
+.main .race {
 	display: flex;
 	background-color: var(--text-main);
 	color: var(--bg-prime);
@@ -339,7 +340,13 @@ body.loading {
 	justify-content: center;
 	padding: 20px 46px 32px;
 	box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
-	margin-top: 32px;
+	margin: 16px 0;
+	width: calc(100% - 92px)
+}
+
+.main.overview .race {
+	margin: 32px 0 0;
+
 }
 
 #race-results {
@@ -404,6 +411,12 @@ body.loading {
 .race .driver .time {
 	width: 110px;
 	text-align: center
+}
+
+.race .driver .time.min {
+	background: #c700ff;
+	color: var(--text-main);
+	border-radius: 5px;
 }
 
 #more-race {
@@ -485,7 +498,7 @@ body.loading {
 	padding: 10px;
 	border-radius: 10px;
 	box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
-	margin: 16px;
+	margin: 16px 0;
 }
 
 .comming {
@@ -594,6 +607,10 @@ body.loading {
 	display: block
 }
 
+.md.read a img {
+	max-width: 400px
+}
+
 .md code.hljs {
 	color: var(--text-main);
 	background-color: var(--bg-prime);
@@ -638,6 +655,10 @@ body.loading {
 	box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
 }
 
+.content.centered .md.read a img {
+	box-shadow: none;
+}
+
 .inner {
 	text-align: center;
 	background-color: var(--bg-secondary);
@@ -656,13 +677,13 @@ body.loading {
 
 @media screen and (min-width: 1400px) {
 	.plot {
-		width: 27%;
+		width: 30%;
 	}
 }
 
 @media screen and (max-width: 1399px) {
 	.plot {
-		width: 43%;
+		width: 46%;
 	}
 }
 
@@ -791,10 +812,15 @@ body.loading {
 		flex-direction: row
 	}
 
+	.race .driver .time {
+		width: 80px;
+		text-align: center
+	}
+
 /* 	End style Grand-Prix Overview */
 
 	.plot {
-		width: 100%;
+		width: calc(100% - 20px);
 	}
 
 	.side-bar {
@@ -834,7 +860,7 @@ body.loading {
 	.content {
 		position: fixed;
 		left: 70px;
-		left: calc(60px + env(safe-area-inset-left));
+		left: calc(70px + env(safe-area-inset-left));
 		right: 0;
 		width: auto;
 		margin: 0;
@@ -1155,7 +1181,7 @@ body.loading {
 	}
 
 	.plot {
-		width: 100%;
+		width: calc(100% - 20px);
 	}
 
 	.content-map {
@@ -1349,6 +1375,17 @@ body.loading {
 		font-size: 20px;
 	}
 
+	.main .race {
+		padding: 20px 46px 32px;
+		margin: 16px;
+		width: calc(100% - 124px)
+	}
+
+	.main.overview .race {
+		margin: 32px 0 0;
+
+	}
+
 	#race-results {
 		padding: 46px 20px 20px
 	}
@@ -1391,6 +1428,7 @@ body.loading {
 
 	.plot, .plot.lap_comp {
 		width: calc(100vw - 52px);
+		margin: 16px;
 	}
 
 	.presentation p {
@@ -1454,5 +1492,5 @@ body.loading {
 }
 
 .lap_comp {
-	width: 100%;
+	width: calc(100% - 20px);
 }

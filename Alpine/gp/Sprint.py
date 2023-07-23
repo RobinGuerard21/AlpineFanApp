@@ -60,7 +60,7 @@ def sprint_race(session, event, year):
         session.weather_data.dropna(axis=0, inplace=True)
         _weather = session.weather_data
         _results = session.results
-        race_Date = utils.time.get_session_date(session, event, year)
+        race_Date = utils.time.get_session_date(session.date)
         race = True
         return race, race_Date, name, _laps, _tel, _weather, _results
     else:
@@ -117,7 +117,7 @@ class Sprint:
                     weather.dropna(axis=0, inplace=True)
                     self._Q_weather = weather
                     self.Qualif = True
-                    self.Qualif_Date = utils.time.get_session_date(session, event, year)
+                    self.Qualif_Date = utils.time.get_session_date(session.date)
                 else:
                     self.Qualif = False
                     self.Qualif_Date = utils.time.get_session_date(session.date)

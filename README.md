@@ -52,7 +52,7 @@ You can quickly access the dashboard online on [alpinefan.robcorp.net](https://a
 
 If you want to support the development of Alpine Fan, you can buy me a lemon !
 
-[![](assets/images/bml.png)](https://www.buymeacoffee.com/alpinesfan)
+[![](/assets/images/bml.png)](https://www.buymeacoffee.com/alpinesfan)
 
 ## Notice
 

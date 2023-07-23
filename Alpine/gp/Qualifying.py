@@ -77,6 +77,8 @@ class Qualifying:
         self._laps = pd.read_csv(laps_file)
         tel_file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}-tel.csv")
         self._tel = pd.read_csv(tel_file)
+        results_file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}-results.csv")
+        self._results = pd.read_csv(results_file)
         weather_file = path.join("data", str(year) + " " + session.event.EventName, f"{session.name}-weather.csv")
         self._weather = pd.read_csv(weather_file)
 
@@ -87,6 +89,10 @@ class Qualifying:
     @property
     def tel(self):
         return self._tel
+
+    @property
+    def results(self):
+        return self._results
 
     @property
     def weather(self):

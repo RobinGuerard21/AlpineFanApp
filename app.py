@@ -1,8 +1,9 @@
 import dash
-from dash import Dash, html
+from dash import Dash, html, dcc
 import logger
 import flask
 import os
+from dash.dependencies import Input, Output
 import Alpine.utils as utils
 import gen.data
 
@@ -84,12 +85,6 @@ app.index_string = '''
             <div id="welcome">
             </div>
         </div>
-        <a href="''' + utils.time.get_latest() + '''">
-            <div id="latest" class="">
-                <label class="desktop">Last Race</label>
-                <i class="fas fa-arrow-right"></i>
-            </div>
-        </a>
         {%app_entry%}
         <footer>
             {%config%}
@@ -101,6 +96,8 @@ app.index_string = '''
 '''
 
 app.layout = html.Div(className="window", children=[
+    html.Div(id="latest", children=[html.Label(className="desktop", children="Last Race"), html.I(className="fas fa-arrow-right")]),
+    dcc.Location(id='urllatestst', refresh=True),
     # Beginning of the sidebar
     html.Div(className="side-bar", children=[
         # Top part of the sidebar
@@ -138,6 +135,11 @@ app.layout = html.Div(className="window", children=[
     dash.page_container
 ])
 
+@dash.callback(Output('urllatest', 'pathname'),
+              [Input('latest', 'n_clicks')])
+def redirect_to_gp(n_clicks):
+    if n_clicks is not None:
+        return utils.time.get_latest()
 
 @server.route('/favicon.ico')
 def favicon():
