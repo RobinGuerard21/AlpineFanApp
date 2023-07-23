@@ -97,7 +97,7 @@ app.index_string = '''
 
 app.layout = html.Div(className="window", children=[
     html.Div(id="latest", children=[html.Label(className="desktop", children="Last Race"), html.I(className="fas fa-arrow-right")]),
-    dcc.Location(id='urllatestst', refresh=True),
+    dcc.Location(id='urllatest', refresh=True),
     # Beginning of the sidebar
     html.Div(className="side-bar", children=[
         # Top part of the sidebar
