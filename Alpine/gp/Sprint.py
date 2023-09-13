@@ -67,7 +67,7 @@ def sprint_race(session, event, year):
         race = False
         race_Date = utils.time.get_session_date(session.date)
         logging.info('The session is not done, the data is available 1h after the end of the session.')
-        return race, race_Date, name, "", "", "", "", ""
+        return race, race_Date, name, "", "", "", ""
 
 
 

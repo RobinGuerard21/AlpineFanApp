@@ -1,12 +1,14 @@
 # TODO: not sure it's useful now that the api was actualized with the new drivers and their colors
 import warnings
 
-drivers_list = ['PER', 'VER', 'ALO', 'RUS', 'HAM', 'SAI', 'LEC', 'OCO', 'GAS', 'MAG', 'TSU', 'HUL', 'ZHO', 'DEV', 'PIA', 'SAR', 'NOR', 'BOT', 'ALB', 'STR']
+drivers_list = ['PER', 'VER', 'ALO', 'RUS', 'HAM', 'SAI', 'LEC', 'OCO', 'GAS', 'MAG', 'TSU', 'HUL', 'ZHO', 'DEV', 'PIA',
+                'SAR', 'NOR', 'BOT', 'ALB', 'STR', 'RIC', 'SHW', 'LAW']
 
-drivers_colors = {'ALB': '#005aff', 'SAI': '#ff8181', 'LEC': '#dc0000', 'OCO': '#70c2ff', 'DRU': '#2f9b90', 'ALO': '#006f62',
-                'RUS': '#24ffff', 'MAG': '#000000', 'STR': '#25a617', 'NOR': '#eeb370', 'HAM': '#00d2be', 'SAR': '#012564',
-                'VER': '#0600ef', 'HUL': '#373737', 'DEV': '#2b4562', 'PIA': '#ff8700', 'GAS': '#0090ff', 'PER': '#716de2',
-                'BOT': '#900000', 'TSU': '#356cac', 'ZHO': '#500000'}
+drivers_colors = {'ALB': '#005aff', 'SAI': '#ff8181', 'LEC': '#dc0000', 'OCO': '#70c2ff', 'DRU': '#2f9b90',
+                  'ALO': '#006f62','RUS': '#24ffff', 'MAG': '#000000', 'STR': '#25a617', 'NOR': '#eeb370',
+                  'HAM': '#00d2be', 'SAR': '#012564','VER': '#0600ef', 'HUL': '#373737', 'DEV': '#2b4562',
+                  'PIA': '#ff8700', 'GAS': '#0090ff', 'PER': '#716de2', 'BOT': '#900000', 'TSU': '#356cac',
+                  'ZHO': '#500000', 'RIC': '#2b4562', 'LAW': '#2b4562', 'SHW': '#9c0000'}
 
 teams_list = ['Red Bull Racing', 'Aston Martin', 'Mercedes', 'Ferrari', 'Alpine', 'Haas F1 Team', 'AlphaTauri',
               'Alfa Romeo', 'McLaren', 'Williams']

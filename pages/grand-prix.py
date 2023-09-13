@@ -146,7 +146,7 @@ def qualy_result(content, results):
                                d_time2, d_time3])
         )
     more = html.Img(id="more-race", src="/assets/images/more.svg")
-    content.append(html.Div(className="race", children=[html.Div(className="title", children="Race Results"),
+    content.append(html.Div(className="race", children=[html.Div(className="title", children="Qualifying Results"),
                                                         html.Div(id="race-results", children=classement), more]))
     return content
 
@@ -379,6 +379,8 @@ def Race(year, event, name):
         main.append(
             html.Div(className="plot lap_comp", children=dcc.Graph(id='race_lap_times', figure=race.lap_times())))
         main.append(
+            html.Div(className="plot lap_comp", children=dcc.Graph(id='race_pos_evo', figure=race.drivers_evo())))
+        main.append(
             html.Div(className="plot violin_st", children=dcc.Graph(id='race_violin_st', figure=race.violin_st())))
         main.append(
             html.Div(className="plot violin_lap", children=dcc.Graph(id='race_violin_lap', figure=race.violin_lap())))
@@ -456,6 +458,7 @@ def overview(year, event, gp):
     content.append(html.Div(className="box where", children=[html.H1(children="Where is the best place to watch?"),
                                                              html.P(children=race["where"].replace('\u00e2\u0080\u0099',
                                                                                                    '’'))]))
+    content.append(html.Div(className="box cprights", children=html.P(children="Source : formula1.com")))
 
     return html.Div(className="main overview", children=content)
 

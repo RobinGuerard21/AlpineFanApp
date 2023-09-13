@@ -105,7 +105,7 @@ body.loading {
 	overflow: hidden;
 	width: 40px;
 	height: 40px;
-	z-index: 1000;
+	z-index: 10;
 	background: linear-gradient(rgba(61,9,121,1), rgba(59,0,255,1));
 	border-radius: 20px;
 	cursor: pointer;
@@ -184,8 +184,8 @@ body.loading {
 }
 
 .content {
-	padding: 5vh 50px 0;
-	width: calc(100vw - 400px);
+	padding: 5vh 0 0;
+	width: calc(100vw - 300px);
 	height: 95vh;
 	transition: all 0.5s ease-in-out;
 }
@@ -211,6 +211,7 @@ body.loading {
 	position: relative;
 	z-index: 2;
 	box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+	margin: 0 50px;
 }
 
 .gp-header .mobile {
@@ -292,11 +293,11 @@ body.loading {
 	display: flex;
 	justify-content: space-between;
 	overflow-y: auto;
-	height: calc(100vh - 7.5vh - 50px);
 	flex-wrap: wrap;
 	z-index: 1;
-	margin: -10px -50px 0;
-	padding: 2.5vh 50px 0;
+	height: calc(95vh - 5vh - 60px);
+	margin: -10px 0;
+	padding: 5vh 50px 10px;
 }
 
 .main::-webkit-scrollbar {
@@ -307,9 +308,6 @@ body.loading {
 	flex-direction:column;
 	justify-content: unset;
 	flex-wrap: unset;
-	margin: -10px -2vw;
-	height: calc(95vh - 60px - 5vh + 10px);
-	padding: 5vh 2vw 0;
 }
 
 .main.overview .box {
@@ -346,7 +344,6 @@ body.loading {
 
 .main.overview .race {
 	margin: 32px 0 0;
-
 }
 
 #race-results {
@@ -365,7 +362,7 @@ body.loading {
 
 .race .title {
 	font-size: 30px;
-	font-family: "Marianne Bold";
+	font-weight: 700;
 	text-align: center;
 	margin-bottom: 10px
 }
@@ -420,6 +417,8 @@ body.loading {
 }
 
 #more-race {
+	margin-top: 10px;
+	cursor: pointer;
 	width: 85px;
 	align-self:center
 }
@@ -469,12 +468,27 @@ body.loading {
 	margin: 32px 0;
 }
 
-.where {
-	margin-bottom: 5vh
+
+.main.overview .box.cprights{
+	margin: 32px 0;
+	padding: 16px;
 }
 
-.built, .like, .where {
+.cprights p {
+	width: 100%;
+	text-align: center;
+}
+
+.built, .like, .where, .cprights {
 	background: var(--bg-secondary)
+}
+
+.box h1 {
+	margin: 0 0 21.44px
+}
+
+.box p {
+	margin: 0
 }
 
 .presentation a {
@@ -644,6 +658,7 @@ body.loading {
 
 .content.centered {
 	padding: 5vh 50px;
+	width: calc(100vw - 400px);
 	height: 90vh;
 	display: flex;
 	align-items: center;
@@ -673,6 +688,21 @@ body.loading {
 
 .inner::-webkit-scrollbar {
 	display: none;
+}
+
+
+.lap_comp {
+	width: calc(100% - 20px);
+}
+
+.rightsreserved {
+	position: absolute;
+	bottom: 10px;
+	text-align: center;
+	width: 300px;
+	left: 50vw;
+	z-index: 9;
+	opacity: 20%
 }
 
 @media screen and (min-width: 1400px) {
@@ -725,8 +755,12 @@ body.loading {
 
 	.content {
 		margin-left: 100px;
-		width: calc(100vw - 200px);
+		width: calc(100vw - 100px);
 		transition: width 0.5s ease-in-out;
+	}
+
+	.content.centered {
+		width: calc(100vw - 200px)
 	}
 
 	.doc-main {
@@ -741,6 +775,10 @@ body.loading {
 
 	.content.patch {
 		width: calc(100vw - 100px)
+	}
+
+	.rightsreserved {
+		left: calc(50vw - 150px + 50px);
 	}
 }
 
@@ -876,9 +914,13 @@ body.loading {
 		height: auto;
 	}
 
-	.inner, .md {
+	.inner {
 		width: 90%;
-		height: 80%
+	}
+
+	.md {
+		width: 90%;
+		height: 80%;
 	}
 
 	.doc-main, .content-map {
@@ -932,6 +974,10 @@ body.loading {
 		position: absolute;
 		left: 70px;
 		width: calc(100vw - 70px)
+	}
+
+	.rightsreserved {
+		left: calc(50vw - 150px + 40px);
 	}
 }
 
@@ -1110,8 +1156,8 @@ body.loading {
 		top: calc(60px + env(safe-area-inset-top));
 		bottom: 80px;
 		margin: 0;
-		padding: 0 50px;
-		width: calc(100vw - 100px);
+		padding: 0;
+		width: 100vw;
 		height: auto;
 	}
 
@@ -1153,6 +1199,7 @@ body.loading {
 		position: fixed;
 		top: 0;
 		left: 0;
+		margin: 0;
 		padding: 0 20px;
 		border-radius: 0 0 10px 10px;
 	}
@@ -1175,9 +1222,7 @@ body.loading {
 	}
 
 	.main {
-		margin-top: 0;
-		padding-top: 0;
-		height: 100%;
+		height: calc(95vh - 60px - 80px + 10px);
 	}
 
 	.plot {
@@ -1209,6 +1254,11 @@ body.loading {
 		top: env(safe-area-inset-top);
 		bottom: 70px;
 		width: calc(100vw)
+	}
+
+	.rightsreserved {
+		bottom: 80px;
+		left: calc(50vw - 150px);
 	}
 }
 
@@ -1286,8 +1336,6 @@ body.loading {
 	}
 
     .content {
-		padding: 0 25px;
-		width: calc(100vw - 50px);
 		bottom: 70px;
 	}
 
@@ -1301,6 +1349,10 @@ body.loading {
 
     .content.centered .md {
 		font-size: 13px;
+	}
+
+	.main {
+		padding: 5vh 25px 10px
 	}
 
     .doc-main {
@@ -1365,35 +1417,6 @@ body.loading {
 		background-color: var(--bg-secondary);
 	}
 
-	.main.overview {
-		margin: -10px 0;
-		width: 92vw;
-		padding: 3vh 4vw;
-	}
-
-	.overview h1 {
-		font-size: 20px;
-	}
-
-	.main .race {
-		padding: 20px 46px 32px;
-		margin: 16px;
-		width: calc(100% - 124px)
-	}
-
-	.main.overview .race {
-		margin: 32px 0 0;
-
-	}
-
-	#race-results {
-		padding: 46px 20px 20px
-	}
-
-	#more-race {
-		margin: 40px 0 -20px;
-	}
-
 	.side-bar, .side-bar:hover, .sidebar:focus {
 		position: fixed;
 		top: auto;
@@ -1409,11 +1432,6 @@ body.loading {
 		right: 5%;
 	}
 
-	.content {
-		padding: 0;
-		width: 100vw;
-	}
-
 	.content.centered .inner {
 		 width: 80%;
 	}
@@ -1422,13 +1440,30 @@ body.loading {
 		font-size: 13px;
 	}
 
+	.overview h1 {
+		font-size: 20px;
+	}
+
+	.main .race {
+		padding: 20px 46px 32px;
+		width: calc(100% - 92px);
+	}
+
 	.main {
-		width: 100vw;
+		padding: 5vh 16px 10px;
+	}
+
+
+	#race-results {
+		padding: 46px 20px 20px
+	}
+
+	#more-race {
+		margin: 40px 0 -20px;
 	}
 
 	.plot, .plot.lap_comp {
-		width: calc(100vw - 52px);
-		margin: 16px;
+		margin: 16px 0;
 	}
 
 	.presentation p {
@@ -1455,6 +1490,10 @@ body.loading {
 
 	.md.patchnote{
 		margin: 10px 15px
+	}
+
+	.rightsreserved {
+		position: fixed;
 	}
 }
 
@@ -1489,8 +1528,4 @@ body.loading {
 		/* padding: 37px 0 0; */
 		border-radius: 0 0 10px 10px;
 	}
-}
-
-.lap_comp {
-	width: calc(100% - 20px);
 }

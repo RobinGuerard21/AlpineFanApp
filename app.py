@@ -36,48 +36,64 @@ app.index_string = '''
       gtag('config', 'G-7KZYT80WN5');
     </script>
     <script>
-        document.addEventListener("DOMContentLoaded", function(event) {
-            function splash() {
-                document.getElementById("latest").style.display = "none"
-                document.querySelector("body").classList.add("loading");
-                document.querySelector(".load").classList.add("show");
-                const welcomeText = document.getElementById("welcome");
-                const welcomeMessage = "Welcome!";
-                const delayBetweenLetters = 150; // milliseconds
-
-                let index = 0;
-                function showWelcomeText() {
-                    if (index < welcomeMessage.length) {
-                        welcomeText.innerHTML += welcomeMessage.charAt(index);
-                        index++;
-                        setTimeout(showWelcomeText, delayBetweenLetters);
-                    }
-                }
-
-                setTimeout(showWelcomeText, 500); // Delay before showing the welcome text
-                function close() {
-                    document.querySelector(".load").classList.remove("show");
-                    document.querySelector("body").classList.remove("loading");
-                    document.getElementById("latest").style.display = "block"
-                }
-                setTimeout(close, 2500);    
+        let splashComplete = false
+        let state = false
+        
+        function latest() {
+            function close_latest() {
+                document.getElementById("latest").classList.remove("active");
             }
-            function latest() {
-                function close_latest() {
-                    document.getElementById("latest").classList.remove("active");
+            document.getElementById("latest").classList.add("active")
+            setTimeout(close_latest, 5000)
+        }
+        
+        function close() {
+            if (splashComplete && state) {
+                document.querySelector(".load").classList.remove("show");
+                document.querySelector("body").classList.remove("loading");
+                setTimeout(latest, 500)
+            }
+        }
+        
+        function splash() {
+            document.querySelector("body").classList.add("loading");
+            document.querySelector(".load").classList.add("show");
+            const welcomeText = document.getElementById("welcome");
+            const welcomeMessage = "Welcome!";
+            const delayBetweenLetters = 150; // milliseconds
+
+            let index = 0;
+            function showWelcomeText() {
+                if (index < welcomeMessage.length) {
+                    welcomeText.innerHTML += welcomeMessage.charAt(index);
+                    index++;
+                    setTimeout(showWelcomeText, delayBetweenLetters);
+                } else {
+                    splashComplete = true; // Mark splash as complete
+                    setTimeout(close, 2500); // Call close() after splash is complete
                 }
-                document.getElementById("latest").classList.add("active")
-                setTimeout(close_latest, 5000)
             }
             const splashDisplayed = sessionStorage.getItem("splashDisplayed");
             if (!splashDisplayed) {
                 sessionStorage.setItem("splashDisplayed", "true");
-                splash()
-                setTimeout(latest, 3000)
+                setTimeout(() => {
+                    showWelcomeText();
+                }, 500);
             } else {
-                setTimeout(latest, 500)
+                splashComplete = true
+                close()
             }
-        });
+        }
+        
+        document.onreadystatechange = function() {
+            if (document.readyState !== "complete") {
+                window.scrollTo(0,0)
+                splash()
+            } else {
+                state = true
+                close()
+            }
+        };
     </script>
     <body class="">
         <div class="load">
@@ -90,6 +106,7 @@ app.index_string = '''
             {%config%}
             {%scripts%}
             {%renderer%}
+            <div class="rightsreserved">Website created by Rob's Corp</div>
         </footer>
     </body>
 </html>
@@ -160,4 +177,4 @@ def robot():
 
 
 if __name__ == '__main__':
-    app.run_server(host='0.0.0.0', port=8050, debug=True)
+    app.run_server(host='0.0.0.0', port=8050, debug=False)

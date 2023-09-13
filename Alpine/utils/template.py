@@ -9,7 +9,7 @@ custom_theme.layout.paper_bgcolor = '#fffffa'
 custom_theme.layout.plot_bgcolor = '#fffffa'
 
 # Set font family and color
-custom_theme.layout.font.family = 'Raleway Medium'
+custom_theme.layout.font.family = 'Inter Medium'
 custom_theme.layout.font.color = '#2c3e50'
 
 # Set background line color

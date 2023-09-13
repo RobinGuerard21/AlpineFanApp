@@ -162,3 +162,12 @@ class Race:
                          color_discrete_sequence=teams_colors, title=f"{self.event_name} Race Teams Top Speed")
         fig = utils.logo(fig)
         return fig
+
+    def drivers_evo(self):
+        laps = self._laps
+        drivers = pd.unique(laps.Driver).tolist()
+        colors = utils.driver_color(drivers)
+        fig = px.line(laps, x="LapNumber", y="Position", color="Driver", color_discrete_sequence=colors, markers=True,
+                      title=f"{self.event_name} Race Lap by Lap Drivers Positions")
+        fig = utils.logo(fig)
+        return fig

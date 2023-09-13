@@ -1,6 +1,7 @@
 from . import colors, template, time
 import warnings
 import logging
+import os
 
 
 __all__ = ['driver_color', 'team_color', 'error']
@@ -87,6 +88,12 @@ def logo(fig, rows=1):
 
 def error(issue):
     logger = logging.getLogger(__name__)
+
+    if not os.path.exists("logs"):
+        os.mkdir("logs")
+
+    if not os.path.exists('logs/alpine.log'):
+        open('logs/alpine.log', 'x')
 
     file_handler = logging.FileHandler('logs/alpine.log')
     file_handler.setLevel(logging.WARNING)

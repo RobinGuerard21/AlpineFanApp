@@ -82,7 +82,7 @@ class FreePractice:
                     self.fp3_Date = "Never"
                     return
                 self.fp2 = False
-                self.fp2_Date = utils.time.fastf1.get_session(year, event, "fp2").date
+                self.fp2_Date = utils.time.get_session_date(fastf1.get_session(year, event, "fp2").date)
                 if session.event.EventFormat == "sprint":
                     self.fp3 = False
                     self.fp3_Date = "Never"
