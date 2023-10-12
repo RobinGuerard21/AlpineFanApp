@@ -493,13 +493,13 @@ def layout(session=None, year=None, event=None, **other):
     chosen_gp = gp_data.loc[(gp_data['Year'] == year) & (gp_data["Round"] == event)]
     # Defining page if all variable are set
     if session == "fp" or session == "qualif" or session == "race" or session == "sprint":
-        # page = content(year, event, session, chosen_gp)
-        try:
-            page = content(year, event, session, chosen_gp)
-        except:
-            # TODO : Make it better
-            page = html.P(children="Sorry there is a problem here")
-            utils.error(f'Something went wrong went trying to display {session} of {chosen_gp.Name.iloc[0]} {year}')
+        page = content(year, event, session, chosen_gp)
+    #    try:
+    #        page = content(year, event, session, chosen_gp)
+    #    except:
+    #        # TODO : Make it better
+    #        page = html.P(children="Sorry there is a problem here")
+    #        utils.error(f'Something went wrong went trying to display {session} of {chosen_gp.Name.iloc[0]} {year}')
     else:
         page = overview(year, event, chosen_gp)
     if chosen_gp.Format.iloc[0] == "sprint_shootout" or chosen_gp.Format.iloc[0] == "sprint":

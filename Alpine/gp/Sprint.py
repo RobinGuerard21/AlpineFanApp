@@ -81,6 +81,7 @@ class Sprint:
         self.event_date = sprint.event.EventDate
         file = path.join("data", str(year) + " " + sprint.event.EventName, f"{sprint.name}.z")
         if not path.exists(file):
+            print(format)
             if format == "sprint_shootout":
                 session = fastf1.get_session(year, event, 3)
                 self.Q_name = session.name
@@ -122,7 +123,7 @@ class Sprint:
                     self.Qualif = False
                     self.Qualif_Date = utils.time.get_session_date(session.date)
                     logging.info('The session is not done, the data is available 1h after the end of the session.')
-                    return
+                    # return
             else:
                 self.Qualif = False
                 self.Qualif_Date = "Never"

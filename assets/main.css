@@ -691,7 +691,7 @@ body.loading {
 }
 
 
-.lap_comp {
+.main .lap_comp {
 	width: calc(100% - 20px);
 }
 
